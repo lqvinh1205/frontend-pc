@@ -10,7 +10,7 @@ function App() {
   return (
     <ReduxProvider store={store}>
       {/* <Notifications /> */}
-      <BrowserRouter> 
+      <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>
     </ReduxProvider>

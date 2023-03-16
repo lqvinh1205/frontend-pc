@@ -1,6 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reducer from "./reducers.js";
+import landingSlice from "../features/landing/landingSlice";
+import appSlice from "./app.slice";
 
 export const store = configureStore({
-  reducer,
+  reducer: {
+    app: appSlice,
+    landing: landingSlice,
+  },
 });

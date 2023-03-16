@@ -1,21 +1,27 @@
-import { t } from "i18next";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { changeLanguage as testFn, changeText } from "../../stores/reducers";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { changeLanguage } from "../../stores/app.slice";
 
 const LandingPage = (prop) => {
   const dispatch = useDispatch();
-  const store = useSelector((store) => store);
-  console.log(store);
-  const changeLanguage = () => {
-    dispatch(testFn());
-    dispatch(changeText());
+  const { t } = useTranslation();
+  const [language, setLanguage] = useState(
+    localStorage.getItem("i18n") || "vn"
+  );
+
+  const onChangeLanguage = (e) => {
+    dispatch(changeLanguage(e.target.value));
+    setLanguage(e.target.value);
   };
+
   return (
     <div>
-      LandingPage: {t("welcome")} <br />
-      <button onClick={changeLanguage}>Change language</button>
-      <h1>{store.text}</h1>
+      LandingPage: {t("welcome")}
+      <select onChange={onChangeLanguage} value={language}>
+        <option value="vn">VN</option>
+        <option value="en">EN</option>
+      </select>
     </div>
   );
 };
