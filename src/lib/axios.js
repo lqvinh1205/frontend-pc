@@ -1,8 +1,7 @@
 import Axios from "axios";
-import storage from "@/utils/storage";
 
 function authRequestInterceptor(config) {
-  const token = storage.getToken();
+  const token = localStorage.getItem("token");
   if (token) {
     config.headers.authorization = `${token}`;
   }
