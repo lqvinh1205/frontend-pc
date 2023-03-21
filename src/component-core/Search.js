@@ -13,7 +13,7 @@ const Search = () => {
         <input
           type="search"
           placeholder="Tìm kiếm"
-          className="h-full w-full bg-transparent px-2 py-2 text-[14px] placeholder:text-white focus:w-full focus:text-black focus:outline-none"
+          className="h-full w-full bg-transparent px-2 text-[14px] placeholder:text-white focus:w-full focus:text-black focus:outline-none"
         />
       </label>
     </div>

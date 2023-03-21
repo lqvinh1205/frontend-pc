@@ -9,11 +9,13 @@ const initStyles = {
   size: 'text-[14px]',
   px: 'px-[12px]',
   py: 'py-[6px]',
-  rounded: 'rounded-[3px]'
+  rounded: 'rounded-[3px]',
+  bg: '',
+  color: ''
 };
 
 const Dropdown = ({ lable, onClick, children, header, footer, icon, styles = initStyles }) => {
-  const { size, px, py, rounded } = Object.assign({ ...initStyles }, styles);
+  const { size, px, py, rounded, bg, color } = Object.assign({ ...initStyles }, styles);
   const data = [
     {
       category: 'Các mẫu hàng đầu',
@@ -68,11 +70,17 @@ const Dropdown = ({ lable, onClick, children, header, footer, icon, styles = ini
   return (
     <div className="relative" ref={refParent}>
       <div
-        className={`flex h-full cursor-pointer items-center justify-center text-white hover:bg-gray-700 ${px} ${py} ${rounded}`}
+        className={`flex h-full cursor-pointer items-center justify-center text-white hover:bg-gray-700 ${px} ${py} ${rounded} ${bg}`}
         onClick={toggleDropdown}>
-        <div className={`flex items-baseline gap-2 ${size}`}>
-          {lable}
-          {icon}
+        <div className={`flex items-baseline gap-2 ${size} ${color}`}>
+          {children ? (
+            children
+          ) : (
+            <>
+              {lable}
+              {icon}
+            </>
+          )}
         </div>
       </div>
       {visible && (
