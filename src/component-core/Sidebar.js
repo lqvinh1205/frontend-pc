@@ -25,7 +25,7 @@ const children = [
 
 const Sidebar = () => {
   return (
-    <div className="flex w-[260px] flex-1 flex-col bg-slate-900 text-white">
+    <div className="flex w-[260px] flex-1 flex-col border-r-[1px] border-r-slate-600 bg-slate-900 text-white">
       <div className="flex items-center border-b-[1px] border-b-slate-600 px-3 py-4">
         <div className="flex flex-1">
           <div className="flex w-full items-center gap-2">
@@ -46,7 +46,7 @@ const Sidebar = () => {
           <BsChevronLeft size={12} />
         </div>
       </div>
-      <div className="flex flex-1 flex-col py-3">
+      <div className="flex flex-1 flex-col border-b-[1px] border-b-slate-600 py-3">
         <ul className="mb-2">
           <li className="flex h-[32px] cursor-pointer pl-4 hover:bg-slate-800">
             <a href="" className="flex items-center gap-3">

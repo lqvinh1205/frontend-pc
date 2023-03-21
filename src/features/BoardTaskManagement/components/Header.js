@@ -12,7 +12,7 @@ import Search from '../../../component-core/Search';
 
 const Header = () => {
   return (
-    <div className="flex h-[44px] items-center gap-1 bg-[#010204] px-1 py-1">
+    <div className="flex h-[44px] items-center gap-1 border-b-[1px] border-b-slate-600 bg-[#010204] px-1 py-1">
       <div className="flex h-full items-center gap-1">
         <Button>
           <BsFillGrid3X3GapFill size={16} />
