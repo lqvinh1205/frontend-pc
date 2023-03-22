@@ -68,7 +68,7 @@ const Dropdown = ({ lable, onClick, children, header, footer, icon, styles = ini
   }, [visible]);
 
   return (
-    <div className="relative" ref={refParent}>
+    <div className="group relative" ref={refParent}>
       <div
         className={`flex h-full cursor-pointer items-center justify-center text-white hover:bg-gray-700 ${px} ${py} ${rounded} ${bg}`}
         onClick={toggleDropdown}>

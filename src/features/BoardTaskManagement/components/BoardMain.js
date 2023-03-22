@@ -1,4 +1,5 @@
 import React from 'react';
+import BoardContent from '../../../component-core/BoardContent';
 import Sidebar from '../../../component-core/Sidebar';
 import UtilsBar from '../../../component-core/UtilsBar';
 
@@ -8,6 +9,7 @@ const BoardMain = () => {
       <Sidebar />
       <div className="flex-1 bg-sky-900">
         <UtilsBar />
+        <BoardContent />
       </div>
     </div>
   );
