@@ -9,6 +9,7 @@ const BoardMain = () => {
       <Sidebar />
       <div className="flex-1 bg-sky-900">
         <UtilsBar />
+        hello
         <BoardContent />
       </div>
     </div>
