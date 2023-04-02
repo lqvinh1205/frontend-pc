@@ -2,10 +2,10 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const TaskCard = ({ item, index }) => {
   return (
-    <Draggable key={item.id} draggableId={item.id} index={index}>
+    <Draggable draggableId={item.id.toString()} index={index}>
       {(provided) => (
         <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-          <div className="mt-[15px] flex min-h-[105px] max-w-[311px] flex-col items-start justify-center bg-white px-[15px]">
+          <div className="flex min-h-[105px] max-w-[311px] flex-col items-start justify-center rounded-[3px] bg-white px-[15px] shadow-lg">
             <p>{item.Task}</p>
             <div className="flex w-full items-center justify-between text-[12px] text-[#7d7d7d]">
               <p>

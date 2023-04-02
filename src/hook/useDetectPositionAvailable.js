@@ -30,35 +30,27 @@ export default function UseDetectPositionAvailable({
   // Determine the best position to show the tooltip
   let top, left;
   if (spaceTop >= tooltipHeight && spaceRight >= tooltipWidth) {
-    console.log(1);
     top = triggerTop - tooltipHeight;
     left = 0;
   } else if (spaceTop >= tooltipHeight && spaceRight < tooltipWidth) {
-    console.log(2);
     top = triggerTop - tooltipHeight;
     left = triggerWidth - tooltipWidth;
   } else if (spaceBottom >= tooltipHeight && spaceRight >= tooltipWidth) {
-    console.log(3);
     top = triggerHeight + 5;
     left = 0;
   } else if (spaceBottom >= tooltipHeight && spaceRight < tooltipWidth) {
-    console.log(4);
     top = triggerHeight + 5;
     left = triggerWidth - tooltipWidth;
   } else if (spaceLeft >= tooltipWidth && spaceTop >= tooltipHeight) {
-    console.log(5);
     top = triggerHeight;
     left = -tooltipWidth;
   } else if (spaceLeft >= tooltipWidth && spaceTop < tooltipHeight) {
-    console.log(6);
     top = 0;
     left = -tooltipWidth;
   } else if (spaceRight >= tooltipWidth && spaceTop >= tooltipHeight) {
-    console.log(7);
     top = triggerHeight;
     left = triggerWidth;
   } else if (spaceRight >= tooltipWidth && spaceTop < tooltipHeight) {
-    console.log(8);
     top = 0;
     left = triggerWidth;
   } else {

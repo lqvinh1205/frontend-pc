@@ -14,8 +14,8 @@ const Header = () => {
   return (
     <div className="flex h-[44px] items-center border-b-[1px] border-b-slate-600 bg-[#010204] px-1 py-1">
       <div className="flex h-[32px] w-full items-center gap-1">
-        <div className="flex h-full items-center gap-1">
-          <Button>
+        <div className="flex h-full items-center">
+          <Button styles={{ px: 'px-2', py: 'py-1' }}>
             <BsFillGrid3X3GapFill size={16} />
           </Button>
           <Button>
