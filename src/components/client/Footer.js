@@ -4,7 +4,7 @@ import { LIST_SHOWROOM } from '../../constants';
 const Footer = () => {
   return (
     <div className="flex justify-center bg-[#4471c2]">
-      <div className="flex max-w-[1650px] flex-wrap p-3">
+      <div className="flex max-w-[1650px] flex-wrap py-3">
         {LIST_SHOWROOM.map((item, idx) => (
           <div className="w-[25%] px-3 pb-5 text-white" key={idx}>
             <div className="mb-[10px] font-medium">{item.title}</div>

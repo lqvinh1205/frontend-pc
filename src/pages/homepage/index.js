@@ -1,29 +1,51 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import CategoryBrand from '../../components/client/CategoryBrand';
+import CarouselBanner from '../../components/client/CarouselBanner';
+import ListProducts from '../../components/client/ListProducts';
 
 const Homepage = (prop) => {
-  // const dispatch = useDispatch();
-  // const { t } = useTranslation();
-  // const [language, setLanguage] = useState(localStorage.getItem('i18n') || 'vn');
-
-  // const onChangeLanguage = (e) => {
-  //   dispatch(changeLanguage(e.target.value));
-  //   setLanguage(e.target.value);
-  // };
-
-  // return (
-  //   <div>
-  //     LandingPage: {t('welcome')}
-  //     <select onChange={onChangeLanguage} value={language}>
-  //       <option value="vn">VN</option>
-  //       <option value="en">EN</option>
-  //     </select>
-  //     <Button />
-  //   </div>
-  // );
-  return <div>main page</div>;
+  return (
+    <div className="mt-2">
+      <div className="mx-auto w-full max-w-[1650px]">
+        <div className="flex flex-wrap gap-2">
+          <div id="brands">
+            <CategoryBrand />
+          </div>
+          <div id="group-images" className="flex max-w-full flex-1 flex-wrap gap-2">
+            <div className="banner max-w-[900px]">
+              <CarouselBanner />
+            </div>
+            <div id="sub-images" className="flex-1 flex-col bg-red-100">
+              <div className="flex h-[calc(700px/3)] items-center overflow-hidden">
+                <img
+                  className=" w-full object-cover"
+                  src="https://img.youtube.com/vi/km7C6Hd9cFg/hqdefault.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="flex h-[calc(700px/3)] items-center overflow-hidden">
+                <img
+                  className=" w-full object-cover"
+                  src="https://phucanh.vn/upload/img/laptop/350x195.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="flex h-[calc(700px/3)] items-center overflow-hidden">
+                <img
+                  className="w-full object-cover"
+                  src="https://phucanh.vn/media/banner/12_Oct579702eb66a569ac47e496cba555e382.jpg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="my-2">
+          <ListProducts />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Homepage;

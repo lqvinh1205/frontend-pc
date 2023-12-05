@@ -7,7 +7,7 @@ import Footer from '../components/client/Footer';
 
 const clientLayout = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex min-h-screen flex-col">
       <div id="header">
         <HeaderTop />
         <HeaderMiddle />

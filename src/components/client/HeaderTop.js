@@ -2,8 +2,8 @@ import React from 'react';
 
 const HeaderTop = () => {
   return (
-    <div className="h-[34px] bg-[#365899] px-3">
-      <ul className="flex flex-wrap items-center gap-5 text-[13px] leading-[34px] text-white">
+    <div className="flex h-[34px] justify-center bg-[#365899]">
+      <ul className="flex w-full max-w-[1650px] flex-wrap items-center gap-5 text-[13px] leading-[34px] text-white">
         <li>Bán hàng trực tuyến</li>
         <li>Khuyến mãi</li>
         <li>Mua trả góp</li>
