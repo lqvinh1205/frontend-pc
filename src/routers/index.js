@@ -1,6 +1,8 @@
 import HomePage from '../pages/homepage';
-import ClientLayout from '../layouts/clientLayout';
+import ClientLayout from '../layouts/ClientLayout';
 import { Route, Routes } from 'react-router-dom';
+import AdminLayout from '../layouts/AdminLayout';
+import Dashboard from '../components/admin/Dashboard';
 
 // import { protectedRoutes } from "./protected";
 // import { publicRoutes } from "./public";
@@ -11,7 +13,10 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<ClientLayout />}>
-        <Route path="" element={<HomePage />} />
+        <Route index element={<HomePage />} />
+      </Route>
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<Dashboard />} />
       </Route>
     </Routes>
   );

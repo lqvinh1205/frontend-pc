@@ -22,7 +22,7 @@ const HeaderMiddle = () => {
               id=""
               placeholder="Nhập từ khóa tìm kiếm"
             />
-            <button type="submit" className="h-auto bg-[#de0b00] px-2 text-white">
+            <button type="submit" className="h-auto bg-[#de0b00] px-2 text-[13px] text-white">
               Search
             </button>
           </form>

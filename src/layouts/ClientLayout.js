@@ -5,7 +5,7 @@ import HeaderMiddle from '../components/client/HeaderMiddle';
 import { Outlet } from 'react-router-dom';
 import Footer from '../components/client/Footer';
 
-const clientLayout = () => {
+const ClientLayout = () => {
   return (
     <div className="flex min-h-screen flex-col">
       <div id="header">
@@ -23,4 +23,4 @@ const clientLayout = () => {
   );
 };
 
-export default clientLayout;
+export default ClientLayout;

@@ -1,6 +1,12 @@
+import { Pagination } from 'antd';
 import React from 'react';
 
 const ListProducts = () => {
+  const showTotal = (total) => `Tất cả ${total} sản phẩm`;
+  const onChangePage = (page) => {
+    console.log(page);
+  };
+
   return (
     <div className="flex w-full max-w-[1650px] flex-col">
       <div
@@ -13,9 +19,9 @@ const ListProducts = () => {
         className="flex flex-wrap border border-b-0 border-r-0 border-[#ddd]">
         {Array.from({ length: 15 })
           .fill(null)
-          .map((item) => (
+          .map((item, idx) => (
             <div
-              key={item}
+              key={idx}
               className="flex min-h-[370px] w-[calc(100%/6)] cursor-pointer flex-col border-b-[1px] border-r-[1px] text-[13px]">
               <div className="flex items-center justify-center">
                 <img
@@ -43,6 +49,9 @@ const ListProducts = () => {
               </div>
             </div>
           ))}
+      </div>
+      <div id="pagination" className="flex justify-center pt-4">
+        <Pagination size="small" total={30} onChange={onChangePage} showTotal={showTotal} />
       </div>
     </div>
   );
