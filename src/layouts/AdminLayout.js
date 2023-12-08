@@ -1,33 +1,31 @@
 import React, { useState } from 'react';
+import { Layout, Breadcrumb } from 'antd';
 
-import { Layout, theme } from 'antd';
 import { Outlet } from 'react-router-dom';
-import Sidebar from '../components/admin/Sidebar';
+import SideBar from '../components/admin/Sidebar/SideBar';
 import HeaderAdmin from '../components/admin/HeaderAdmin';
 
+const { Content, Footer, Sider } = Layout;
+
 const AdminLayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer }
-  } = theme.useToken();
+  const [collapsed, setCollapsed] = useState();
   return (
-    <Layout className="min-h-screen">
-      <Sidebar collapsed={collapsed} />
-      <Layout>
-        <HeaderAdmin
-          colorBgContainer={colorBgContainer}
-          collapsed={collapsed}
-          setCollapsed={setCollapsed}
-        />
-        <Layout.Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer
-          }}>
-          <Outlet />
-        </Layout.Content>
+    <Layout style={{ minHeight: '100vh' }}>
+      <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+        <SideBar />
+      </Sider>
+      <Layout className="site-layout">
+        <HeaderAdmin />
+        <Content style={{ margin: '0 16px' }} className="flex flex-col">
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+          </Breadcrumb>
+          <div className="site-layout-background flex-1" style={{ padding: 24, minHeight: 360 }}>
+            <Outlet />
+          </div>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>Phuc Anh Design ©2018 Created by UED</Footer>
       </Layout>
     </Layout>
   );

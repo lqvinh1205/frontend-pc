@@ -1,16 +1,16 @@
-import Axios from "axios";
+import Axios from 'axios';
 
 function authRequestInterceptor(config) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   if (token) {
     config.headers.authorization = `${token}`;
   }
-  config.headers.Accept = "application/json";
+  config.headers.Accept = 'application/json';
   return config;
 }
 
 export const axios = Axios.create({
-  baseURL: process.env.API_URL,
+  baseURL: process.env.REACT_APP_API_URL
 });
 
 axios.interceptors.request.use(authRequestInterceptor);

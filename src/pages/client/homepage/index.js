@@ -1,7 +1,7 @@
 import React from 'react';
-import CategoryBrand from '../../components/client/CategoryBrand';
-import CarouselBanner from '../../components/client/CarouselBanner';
-import ListProducts from '../../components/client/ListProducts';
+import CategoryBrand from '../../../components/client/CategoryBrand';
+import CarouselBanner from '../../../components/client/CarouselBanner';
+import ListProducts from '../../../components/client/ListProducts';
 
 const Homepage = (prop) => {
   return (

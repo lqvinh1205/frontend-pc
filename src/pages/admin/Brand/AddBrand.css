@@ -1,0 +1,8 @@
+.form-add-product .ant-form-item-label > label,
+.form-add-product .ant-input,
+.form-add-product .ant-input-stat.form-add-product us-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
+.form-add-product .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover,
+.form-add-product .anticon-upload svg
+{
+    color: var(--color-black) !important;
+}

@@ -1,5 +1,6 @@
-import { Avatar, Badge, Button, Dropdown, Layout } from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import React from 'react';
+import { DownOutlined } from '@ant-design/icons';
+import { Layout, Badge, Avatar, Dropdown, Space } from 'antd';
 
 const items = [
   {
@@ -26,31 +27,23 @@ const items = [
     key: '3'
   }
 ];
-
-const HeaderAdmin = ({ colorBgContainer, collapsed, setCollapsed }) => {
+const HeaderAdmin = () => {
   return (
     <Layout.Header
-      style={{
-        padding: 0,
-        background: colorBgContainer
-      }}>
+      className="bg-white"
+      style={{ padding: '0 16px', fontWeight: 'bold', fontSize: 25 }}>
       <div className="flex justify-between">
-        <Button
-          type="text"
-          icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-          onClick={() => setCollapsed(!collapsed)}
-          style={{
-            fontSize: '16px',
-            width: 64,
-            height: 64
-          }}
-        />
+        <div>Manager</div>
         <div className="flex items-center gap-7 pr-4">
           <Badge count={100}>
             <Avatar shape="square" size="small" />
           </Badge>
+
           <Dropdown menu={{ items }}>
-            <Avatar style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}>U</Avatar>
+            <Space>
+              <Avatar style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}>U</Avatar>
+              <DownOutlined />
+            </Space>
           </Dropdown>
         </div>
       </div>

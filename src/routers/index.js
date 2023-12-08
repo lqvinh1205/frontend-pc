@@ -1,8 +1,17 @@
-import HomePage from '../pages/homepage';
+import HomePage from '../pages/client/homepage';
 import ClientLayout from '../layouts/ClientLayout';
 import { Route, Routes } from 'react-router-dom';
 import AdminLayout from '../layouts/AdminLayout';
-import Dashboard from '../components/admin/Dashboard';
+import Dashboard from '../pages/admin/Dashboard/Dashboard';
+import ListBrand from '../pages/admin/Brand/ListBrand';
+import AddBrand from '../pages/admin/Brand/AddBrand';
+import EditBrand from '../pages/admin/Brand/EditBrand';
+import ListUsers from '../pages/admin/User/ListUsers';
+import AddUser from '../pages/admin/User/AddUser';
+import EditUser from '../pages/admin/User/EditUser';
+import ListProducts from '../pages/admin/Product/ListProducts';
+import AddProduct from '../pages/admin/Product/AddProduct';
+import EditProduct from '../pages/admin/Product/EditProduct';
 
 // import { protectedRoutes } from "./protected";
 // import { publicRoutes } from "./public";
@@ -17,6 +26,21 @@ export const AppRoutes = () => {
       </Route>
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
+        <Route path="brand">
+          <Route index element={<ListBrand />} />
+          <Route path="add" element={<AddBrand />} />
+          <Route path="edit" element={<EditBrand />} />
+        </Route>
+        <Route path="users">
+          <Route index element={<ListUsers />} />
+          <Route path="add" element={<AddUser />} />
+          <Route path="edit" element={<EditUser />} />
+        </Route>
+        <Route path="products">
+          <Route index element={<ListProducts />} />
+          <Route path="add" element={<AddProduct />} />
+          <Route path="edit" element={<EditProduct />} />
+        </Route>
       </Route>
     </Routes>
   );
