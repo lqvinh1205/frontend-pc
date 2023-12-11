@@ -10,7 +10,10 @@ function authRequestInterceptor(config) {
 }
 
 export const axios = Axios.create({
-  baseURL: process.env.REACT_APP_API_URL
+  baseURL: process.env.REACT_APP_API_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
 });
 
 axios.interceptors.request.use(authRequestInterceptor);

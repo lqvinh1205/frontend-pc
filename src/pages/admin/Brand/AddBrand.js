@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Row, Upload, message } from 'antd';
 import { Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import './AddBrand.css';
+import './Brand.css';
 import { useDispatch } from 'react-redux';
 import { createBrand } from './slice';
-import { createImage } from '../../../stores/slice/images';
+import { useNavigate } from 'react-router-dom';
 
 const { Title } = Typography;
 
 const AddBrand = (props) => {
+  const [fileList, setFileList] = useState(null);
   const dispath = useDispatch();
-  const onFinish = async (cate) => {
-    // cate.images = cate.images[0];
-    console.log(cate);
-    // dispath(createBrand(cate));
+  const navigate = useNavigate();
+
+  const onFinish = async (data) => {
+    const dataReq = {
+      images: data.images[0].originFileObj,
+      name: data.name
+    };
+    const res = await dispath(createBrand(dataReq));
+    if (!res.error) {
+      navigate('/admin/brand');
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -25,25 +33,10 @@ const AddBrand = (props) => {
     if (Array.isArray(e)) {
       return e;
     }
-    console.log(e && e.fileList);
     return e && e.fileList;
   };
-  const customRequest = ({ file, onSuccess, onError }) => {
-    // const isImage = file.type.startsWith('image/');
-    // if (!isImage) {
-    //   message.error('Vui lòng chỉ tải lên file hình ảnh!');
-    //   onError();
-    // }
-    // onSuccess();
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const response = dispath(createImage(file));
-      onSuccess(response);
-    } catch (error) {
-      console.error('Upload failed:', error);
-      onError(error);
-    }
+  const customRequest = (info) => {
+    setFileList(info.file);
   };
   return (
     <>
@@ -68,11 +61,13 @@ const AddBrand = (props) => {
         <Form.Item
           name="images"
           label="Upload"
-          valuePropName=""
+          valuePropName="fileList"
           getValueFromEvent={normFile}
-          extra="">
-          <Upload name="logo" customRequest={customRequest} maxCount={1}>
+          extra=""
+          rules={[{ required: true, message: 'Please input your file!' }]}>
+          <Upload name="logo" customRequest={customRequest} maxCount={1} showUploadList={false}>
             <Button icon={<UploadOutlined />}>Click to upload</Button>
+            <span className="pl-2">{fileList?.name}</span>
           </Upload>
         </Form.Item>
         <Form.Item wrapperCol={{ span: 8 }}>

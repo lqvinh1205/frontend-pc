@@ -29,17 +29,17 @@ export const AppRoutes = () => {
         <Route path="brand">
           <Route index element={<ListBrand />} />
           <Route path="add" element={<AddBrand />} />
-          <Route path="edit" element={<EditBrand />} />
+          <Route path=":id/edit" element={<EditBrand />} />
         </Route>
         <Route path="users">
           <Route index element={<ListUsers />} />
           <Route path="add" element={<AddUser />} />
-          <Route path="edit" element={<EditUser />} />
+          <Route path=":id/edit" element={<EditUser />} />
         </Route>
         <Route path="products">
           <Route index element={<ListProducts />} />
           <Route path="add" element={<AddProduct />} />
-          <Route path="edit" element={<EditProduct />} />
+          <Route path=":id/edit" element={<EditProduct />} />
         </Route>
       </Route>
     </Routes>

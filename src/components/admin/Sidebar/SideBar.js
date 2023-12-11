@@ -25,20 +25,21 @@ const SideBar = () => {
       </Link>
       <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
         <Menu.Item key="1" icon={<PieChartOutlined />}>
-          <Link to="/admin">Dashboard</Link>
+          <Link to="/admin">Thống kê</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<DesktopOutlined />}>
-          <Link to="/admin/category">Category manager</Link>
+          <Link to="/admin/brand">Thương hiệu</Link>
         </Menu.Item>
         <Menu.Item key="3" icon={<UserOutlined />}>
-          <Link to="/admin/users">User Manager</Link>
+          <Link to="/admin/users">Người dùng</Link>
         </Menu.Item>
-        <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-          <Menu.Item key="6">Team 1</Menu.Item>
-          <Menu.Item key="8">Team 2</Menu.Item>
+        <SubMenu key="sub2" icon={<TeamOutlined />} title="Báo cáo">
+          <Menu.Item key="6">Hóa đơn</Menu.Item>
+          <Menu.Item key="7">Nhập kho</Menu.Item>
+          <Menu.Item key="8">Xuất kho</Menu.Item>
         </SubMenu>
         <Menu.Item key="9" icon={<FileOutlined />}>
-          <Link to="/admin/products">Products manager</Link>
+          <Link to="/admin/products">Sản phẩm</Link>
         </Menu.Item>
       </Menu>
     </>

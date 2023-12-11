@@ -1,23 +1,35 @@
-import { Button, Row, Table, Typography } from 'antd';
-import React, { useEffect } from 'react';
+import { Avatar, Button, Row, Table, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { getBrand } from './slice';
+import { useDispatch, useSelector } from 'react-redux';
+import './Brand.css';
+import { getImage } from '../../../ultils';
 
 const ListBrand = (props) => {
-  // const category = useSelector((data) => data.category.values);
-  const category = [];
-  const dispath = useDispatch();
+  const brands = useSelector((state) => state.brand?.list);
+  const dispatch = useDispatch();
+
   const columns = [
     {
-      title: 'Name Category',
-      dataIndex: 'name',
-      render: (text) => <a>{text}</a>
+      title: 'Logo',
+      dataIndex: 'logo',
+      render: (item) => {
+        return (
+          <Avatar
+            className="mb-2"
+            shape="square"
+            size="large"
+            icon={<img alt="" src={getImage(item.path)} />}
+          />
+        );
+      }
     },
     {
-      title: 'Images',
-      className: 'column-money',
-      dataIndex: 'images'
+      title: 'Tên thương hiệu',
+      dataIndex: 'name',
+      render: (text) => <div style={{ display: 'flex', flex: 1 }}>{text}</div>
     },
     {
       title: 'Action',
@@ -25,8 +37,8 @@ const ListBrand = (props) => {
       align: 'right',
       render: (id) => (
         <Row className="flex justify-end gap-2">
-          <Link to={`/admin/category/${id}/edit`}>
-            <Button type="primary" icon={<EditOutlined />}></Button>
+          <Link to={`/admin/brand/${id}/edit`}>
+            <Button type="primary" className="bg-[#1677ff]" icon={<EditOutlined />}></Button>
           </Link>
           <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => {}}></Button>
         </Row>
@@ -35,12 +47,13 @@ const ListBrand = (props) => {
   ];
 
   useEffect(() => {
-    // dispath(getCategory());
+    dispatch(getBrand());
   }, []);
+
   return (
-    <>
+    <div className="list-brand">
       <Row className="mb-3">
-        <Link to="/admin/category/add">
+        <Link to="/admin/brand/add">
           <Button type="primary" className="bg-[#1677ff]">
             Thêm thương hiệu
           </Button>
@@ -48,17 +61,14 @@ const ListBrand = (props) => {
       </Row>
       <Table
         columns={columns}
-        dataSource={category}
+        dataSource={brands}
         bordered
         title={() => <Typography.Title level={3}>List Catgory</Typography.Title>}
         pagination={{
-          total: category.lenght,
-          pageSize: 5,
-          showSizeChanger: true,
-          pageSizeOptions: [5, 6, 7]
+          total: brands?.lenght
         }}
       />
-    </>
+    </div>
   );
 };
 

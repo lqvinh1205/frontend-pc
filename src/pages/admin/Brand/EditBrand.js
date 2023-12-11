@@ -1,92 +1,107 @@
-import React, { useEffect } from 'react';
-import { Form, Input, Button, Row, Upload } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, Row, Upload, message, Avatar } from 'antd';
 import { Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import './AddBrand.css';
-import { useParams } from 'react-router-dom';
+import './Brand.css';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { editBrand, getBrandById } from './slice';
+import { getImage } from '../../../ultils';
 
 const { Title } = Typography;
-// const formRef = React.createRef<FormInstance>();
 
 const EditBrand = (props) => {
-  // goi function tu store
+  const [fileList, setFileList] = useState(null);
+  const [logo, setLogo] = useState(null);
+
   const dispath = useDispatch();
   const [form] = Form.useForm();
-  //lay id tu url
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  //call api
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        // const {
-        //   payload: { category }
-        // } = await dispath(readCategory(id));
-        // console.log(category);
-        // form.setFieldsValue(category);
-      } catch (error) {}
+  const onFinish = async (data) => {
+    const dataReq = {
+      id,
+      images: data.images && data.images.length > 0 ? data.images[0].originFileObj : null,
+      name: data.name
     };
-    getProduct();
-  }, [id]);
-
-  const onFinish = (cate) => {
-    // dispath(updateCategory({ id, ...cate }));
+    const res = await dispath(editBrand(dataReq));
+    if (!res.error) {
+      navigate('/admin/brand');
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    message.error(errorInfo);
   };
 
   const normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
     return e && e.fileList;
   };
+
+  const customRequest = (info) => {
+    setFileList(info.file);
+  };
+
+  //call api
+  const getBrand = async () => {
+    const { payload } = await dispath(getBrandById(id));
+    form.setFieldsValue(payload);
+    setLogo(form.getFieldValue('logo').path);
+  };
+
+  useEffect(() => {
+    getBrand();
+  }, [id]);
+
   return (
     <>
-      <Row className="flex justify-center">
-        <Title level={2}>Fill edit category</Title>
+      <Row className="flex">
+        <Title level={2}>Chỉnh sửa thương hiệu</Title>
       </Row>
       <Form
+        form={form}
         name="basic"
-        labelCol={{ span: 8, offset: 4 }}
-        wrapperCol={{ span: 16, offset: 4 }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 8 }}
         layout="vertical"
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
-        className="form-add-product"
-        form={form}>
+        className="form-add-product">
         <Form.Item
           label="Name category"
           name="name"
-          rules={[{ required: true, message: 'Please input your category!' }]}>
+          rules={[{ required: true, message: 'Please input your username!' }]}>
           <Input placeholder="Name" />
         </Form.Item>
 
-        <Form.Item
-          label="Images category"
-          name="images"
-          rules={[{ required: true, message: 'Please input your images!' }]}>
-          <Input placeholder="http://url" />
-        </Form.Item>
+        {logo && (
+          <Avatar
+            className="mb-2"
+            shape="square"
+            size="large"
+            icon={<img alt="" src={getImage(form.getFieldValue('logo').path)} />}
+          />
+        )}
 
         <Form.Item
           name="images"
           label="Upload"
-          valuePropName=""
+          valuePropName="fileList"
           getValueFromEvent={normFile}
           extra="">
-          <Upload name="logo" action="/upload.do" listType="picture">
+          <Upload name="logo" customRequest={customRequest} maxCount={1} showUploadList={false}>
             <Button icon={<UploadOutlined />}>Click to upload</Button>
+            <span className="pl-2">{fileList?.name}</span>
           </Upload>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+        <Form.Item wrapperCol={{ span: 8 }}>
+          <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
+            Chỉnh sửa
           </Button>
         </Form.Item>
       </Form>

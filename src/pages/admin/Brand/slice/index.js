@@ -3,56 +3,74 @@ import api from '../../../../api';
 import apiConstants from '../../../../api/apiConstants';
 import { message } from 'antd';
 
-const initialState = {
-  brands: []
-};
-
 export const createBrand = createAsyncThunk('brand/createBrand', async (payload) => {
-  const res = await api.post('v1/images/single', payload);
-  return res;
+  try {
+    const res = await api.post(apiConstants.BRAND, payload, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    return res.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
 });
 
 export const getBrand = createAsyncThunk('brand/getBrand', async () => {
   const res = await api.get(apiConstants.BRAND);
-  return res;
+  return res.data;
 });
 
 export const getBrandById = createAsyncThunk('brand/getBrandById', async (payload) => {
   const res = await api.get(`${apiConstants.BRAND}/${payload}`);
-  return res;
+  return res.data.data;
 });
 
 export const editBrand = createAsyncThunk('brand/editBrand', async (payload) => {
-  const res = await api.patch(`${apiConstants.BRAND}/${payload.id}`, payload);
-  return res;
+  const res = await api.patch(`${apiConstants.BRAND}/${payload.id}`, payload, {
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  return res.data;
 });
 
 export const deleteBrand = createAsyncThunk('brand/deleteBrand', async (payload) => {
   const res = await api.delete(`${apiConstants.BRAND}/${payload}`);
-  return res;
+  return res.data;
 });
+
+const initialState = {
+  list: []
+};
 
 export const brandSlice = createSlice({
   name: 'brand',
   initialState,
   reducers: {
     SET_BRANDS: (state, payload) => {
-      state.brands = payload;
+      state.list = payload;
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(createBrand.fulfilled, (state, payload) => {
-      message.success('Thêm mới thành công');
-    });
-    builder.addCase(getBrand.fulfilled, (state, payload) => {
-      SET_BRANDS(payload);
-    });
-    builder.addCase(editBrand.fulfilled, (state, payload) => {
-      message.success('Cập nhật thành công');
-    });
-    builder.addCase(deleteBrand.fulfilled, (state, payload) => {
-      message.success('Xóa nhật thành công');
-    });
+    builder
+      .addCase(createBrand.fulfilled, (state, action) => {
+        message.success('Thêm mới thành công');
+      })
+      .addCase(createBrand.rejected, (state, action) => {
+        message.error(action.error.message);
+      })
+      .addCase(getBrand.fulfilled, (state, action) => {
+        state.list = action.payload.data;
+      })
+      .addCase(editBrand.fulfilled, (state, action) => {
+        message.success('Cập nhật thành công');
+      })
+      .addCase(deleteBrand.fulfilled, (state, action) => {
+        message.success('Xóa nhật thành công');
+      });
   }
 });
 
