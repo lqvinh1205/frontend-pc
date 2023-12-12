@@ -10,13 +10,14 @@ import { useNavigate } from 'react-router-dom';
 const { Title } = Typography;
 
 const AddBrand = (props) => {
+  const [form] = Form.useForm();
   const [fileList, setFileList] = useState(null);
   const dispath = useDispatch();
   const navigate = useNavigate();
 
   const onFinish = async (data) => {
     const dataReq = {
-      images: data.images[0].originFileObj,
+      images: data?.images[0]?.originFileObj,
       name: data.name
     };
     const res = await dispath(createBrand(dataReq));
@@ -26,7 +27,7 @@ const AddBrand = (props) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    message.error(errorInfo);
+    console.log(errorInfo);
   };
 
   const normFile = (e) => {
@@ -35,8 +36,11 @@ const AddBrand = (props) => {
     }
     return e && e.fileList;
   };
-  const customRequest = (info) => {
-    setFileList(info.file);
+  const customRequest = ({ file, onError }) => {
+    if (!file) {
+      onError();
+    }
+    setFileList(file);
   };
   return (
     <>
@@ -44,6 +48,7 @@ const AddBrand = (props) => {
         <Title level={2}>Thêm thương hiệu</Title>
       </Row>
       <Form
+        form={form}
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 8 }}

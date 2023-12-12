@@ -1,8 +1,8 @@
-import { Avatar, Button, Row, Table, Typography } from 'antd';
+import { Avatar, Button, Modal, Row, Table, Typography } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { getBrand } from './slice';
+import { deleteBrand, getBrand } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import './Brand.css';
 import { getImage } from '../../../ultils';
@@ -10,6 +10,19 @@ import { getImage } from '../../../ultils';
 const ListBrand = (props) => {
   const brands = useSelector((state) => state.brand?.list);
   const dispatch = useDispatch();
+
+  const handleRemove = (id) => {
+    Modal.confirm({
+      title: 'Thông báo',
+      content: 'Bạn có chắc muốn xóa',
+      onOk: () =>
+        dispatch(deleteBrand(id)).then((res) => {
+          if (!res.error) {
+            dispatch(getBrand());
+          }
+        })
+    });
+  };
 
   const columns = [
     {
@@ -40,7 +53,11 @@ const ListBrand = (props) => {
           <Link to={`/admin/brand/${id}/edit`}>
             <Button type="primary" className="bg-[#1677ff]" icon={<EditOutlined />}></Button>
           </Link>
-          <Button type="primary" danger icon={<DeleteOutlined />} onClick={() => {}}></Button>
+          <Button
+            type="primary"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() => handleRemove(id)}></Button>
         </Row>
       )
     }

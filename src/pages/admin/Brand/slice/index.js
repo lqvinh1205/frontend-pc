@@ -69,7 +69,7 @@ export const brandSlice = createSlice({
         message.success('Cập nhật thành công');
       })
       .addCase(deleteBrand.fulfilled, (state, action) => {
-        message.success('Xóa nhật thành công');
+        message.success('Xóa thành công');
       });
   }
 });

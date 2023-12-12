@@ -10,5 +10,7 @@
 }
 
 /* list-brand */
-.list-brand {
+
+.ant-btn ~ [type='button'] {
+  background-color: #1677ff !important;
 }
