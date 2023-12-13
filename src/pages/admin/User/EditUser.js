@@ -1,85 +1,103 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button, Row, Select, Upload } from 'antd';
+import { Form, Input, Button, Row, Select, Upload, DatePicker, message } from 'antd';
 import { Typography } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import './AddUser.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { editUser, getUserById } from './slice';
+import dayjs from 'dayjs';
 
 const { Title } = Typography;
 const { Option } = Select;
 
 const EditUser = (props) => {
-  // const dispath = useAppDispatch();
+  const dispath = useDispatch();
+
   const [form] = Form.useForm();
   const { id } = useParams();
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        // const { payload } = await dispath(readUsers(id))
-        // form.setFieldsValue(payload)
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUser();
-  }, []);
-  const onFinish = (user) => {
-    console.log('page AddUser: ', user);
-    // dispath(updateUsers({id, ...user}));
-  };
-  const normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e;
+  const navigate = useNavigate();
+
+  const onFinish = async (user) => {
+    const res = await dispath(editUser({ id, ...user }));
+    if (!res.error) {
+      navigate('/admin/users');
     }
-    return e && e.fileList;
   };
+  const onFinishFailed = (errorInfo) => {
+    message.error(errorInfo);
+  };
+  const getUser = async () => {
+    const { payload } = await dispath(getUserById(id));
+    payload.date_of_birth = dayjs(payload.date_of_birth);
+    form.setFieldsValue(payload);
+  };
+  useEffect(() => {
+    getUser();
+  }, [id]);
   return (
     <>
-      <Row className="flex justify-center">
-        <Title level={2}>Fill edit user</Title>
+      <Row className="flex">
+        <Title level={2}>Cập nhật người dùng</Title>
       </Row>
       <Form
+        form={form}
         name="basic"
-        labelCol={{ span: 8, offset: 4 }}
-        wrapperCol={{ span: 16, offset: 4 }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 8 }}
         layout="vertical"
         onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         autoComplete="off"
-        className="form-add-product"
-        form={form}>
+        className="form-add-product">
         <Form.Item
-          label="Name user"
-          name="name"
+          label="Tên người dùng"
+          name="username"
           rules={[{ required: true, message: 'Please input your username!' }]}>
           <Input placeholder="Name" />
         </Form.Item>
-
         <Form.Item
           label="Email"
           name="email"
-          rules={[{ required: true, message: 'Please input your email!' }]}>
-          <Input placeholder="Email" />
+          rules={[
+            { required: true, message: 'Please input your email!' },
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!'
+            }
+          ]}>
+          <Input placeholder="username@gmail.com" />
         </Form.Item>
-
-        <Form.Item label="Age" name="age">
-          <Input placeholder="Age" />
+        <Form.Item
+          label="Số điện thoại"
+          name="phone_number"
+          rules={[{ required: true, message: 'Please input your phone!' }]}>
+          <Input placeholder="0982882122" />
         </Form.Item>
-
-        <Form.Item label="Role" name="role">
-          <Select placeholder="Select a option" allowClear>
-            <Option value={0}>Member</Option>
-            <Option value={1}>Admin</Option>
+        <Form.Item
+          label="Ngày sinh"
+          name="date_of_birth"
+          rules={[{ required: true, message: 'Please input your date of birth!' }]}>
+          <DatePicker format={'DD/MM/YYYY'} />
+        </Form.Item>
+        <Form.Item
+          label="Địa chỉ"
+          name="address"
+          rules={[{ required: true, message: 'Please input your address!' }]}>
+          <Input placeholder="Ha noi" />
+        </Form.Item>
+        <Form.Item
+          label="Vai trò"
+          name="role"
+          rules={[{ required: true, message: 'Please input your role!' }]}>
+          <Select>
+            <Option value={1}>Người quản trị</Option>
+            <Option value={2}>Nhân viên</Option>
+            <Option value={3}>Khách hàng</Option>
           </Select>
         </Form.Item>
-        <Form.Item label="Upload" valuePropName="" getValueFromEvent={normFile} extra="">
-          <Upload name="logo" action="/upload.do" listType="picture">
-            <Button icon={<UploadOutlined />}>Click to upload</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+        <Form.Item wrapperCol={{ span: 8 }}>
+          <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
+            Cập nhật
           </Button>
         </Form.Item>
       </Form>

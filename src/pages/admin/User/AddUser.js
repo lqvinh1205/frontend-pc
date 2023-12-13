@@ -1,84 +1,95 @@
-import React from 'react';
-import { Form, Input, Button, Row, Select, Upload } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Row, Select, Upload, DatePicker } from 'antd';
 import { Typography } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import './AddUser.css';
 import { useDispatch } from 'react-redux';
+import { createUser } from './slice';
+import { useNavigate } from 'react-router-dom';
 
 const { Title } = Typography;
 const { Option } = Select;
 
 const AddUser = (props) => {
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
   const dispath = useDispatch();
-  const onFinish = (user) => {
-    console.log('page AddUser: ', user);
 
-    // dispath(addUsers(user));
-  };
-  const normFile = (e) => {
-    console.log('Upload event:', e);
-    if (Array.isArray(e)) {
-      return e;
+  const onFinish = async (user) => {
+    const res = await dispath(createUser(user));
+    if (!res.error) {
+      navigate('/admin/users');
     }
-    return e && e.fileList;
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log(errorInfo);
+  };
+  const onChangeDatePicker = (date, dateString) => {
+    console.log(date, dateString);
   };
   return (
     <>
-      <Row className="flex justify-center">
-        <Title level={2}>Fill add products</Title>
+      <Row className="flex">
+        <Title level={2}>Thêm người dùng</Title>
       </Row>
       <Form
+        form={form}
         name="basic"
-        labelCol={{ span: 8, offset: 4 }}
-        wrapperCol={{ span: 16, offset: 4 }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 8 }}
         layout="vertical"
         onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
         autoComplete="off"
         className="form-add-product">
         <Form.Item
-          label="Name user"
-          name="name"
+          label="Tên người dùng"
+          name="username"
           rules={[{ required: true, message: 'Please input your username!' }]}>
           <Input placeholder="Name" />
         </Form.Item>
-
         <Form.Item
           label="Email"
           name="email"
-          rules={[{ required: true, message: 'Please input your email!' }]}>
-          <Input placeholder="Email" />
+          rules={[
+            { required: true, message: 'Please input your email!' },
+            {
+              type: 'email',
+              message: 'The input is not valid E-mail!'
+            }
+          ]}>
+          <Input placeholder="username@gmail.com" />
         </Form.Item>
-
         <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}>
-          <Input placeholder="Password" />
+          label="Số điện thoại"
+          name="phone_number"
+          rules={[{ required: true, message: 'Please input your phone!' }]}>
+          <Input placeholder="0982882122" />
         </Form.Item>
-
-        <Form.Item label="Age" name="age">
-          <Input placeholder="Age" />
+        <Form.Item
+          label="Ngày sinh"
+          name="date_of_birth"
+          rules={[{ required: true, message: 'Please input your date of birth!' }]}>
+          <DatePicker format={'DD/MM/YYYY'} onChange={onChangeDatePicker} />
         </Form.Item>
-
-        <Form.Item label="Role" name="role">
-          <Select placeholder="Select a option" allowClear>
-            <Option value="0">Member</Option>
-            <Option value="1">Admin</Option>
+        <Form.Item
+          label="Địa chỉ"
+          name="address"
+          rules={[{ required: true, message: 'Please input your address!' }]}>
+          <Input placeholder="Ha noi" />
+        </Form.Item>
+        <Form.Item
+          label="Vai trò"
+          name="role"
+          rules={[{ required: true, message: 'Please input your role!' }]}>
+          <Select>
+            <Option value={1}>Người quản trị</Option>
+            <Option value={2}>Nhân viên</Option>
+            <Option value={3}>Khách hàng</Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          name="images"
-          label="Upload"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-          extra="">
-          <Upload name="logo" action="/upload.do" listType="picture">
-            <Button icon={<UploadOutlined />}>Click to upload</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 4, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+        <Form.Item wrapperCol={{ span: 8 }}>
+          <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
+            Thêm mới
           </Button>
         </Form.Item>
       </Form>

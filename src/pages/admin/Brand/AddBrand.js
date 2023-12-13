@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Row, Upload, message } from 'antd';
+import { Form, Input, Button, Row, Upload } from 'antd';
 import { Typography } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import './Brand.css';
