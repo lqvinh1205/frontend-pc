@@ -67,7 +67,9 @@ const ListProducts = (props) => {
     <>
       <Row className="mb-3">
         <Link to="/admin/products/add">
-          <Button type="primary">Add Product</Button>
+          <Button type="primary" className="bg-[#1677ff]">
+            Thêm sản phẩm
+          </Button>
         </Link>
       </Row>
 
@@ -75,7 +77,7 @@ const ListProducts = (props) => {
         columns={columns}
         dataSource={[]}
         bordered
-        title={() => <Typography.Title level={3}>List Products</Typography.Title>}
+        title={() => <Typography.Title level={3}>Danh sách sản phẩm</Typography.Title>}
         pagination={{
           total: 10,
           pageSize: 5,
