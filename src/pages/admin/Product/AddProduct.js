@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
 import { getBrand } from '../Brand/slice';
+import { createProduct } from './slice';
 
 const { Title } = Typography;
-const { Option } = Select;
 
 const AddProduct = (props) => {
   const dispath = useDispatch();
@@ -28,27 +28,36 @@ const AddProduct = (props) => {
       images: data?.images[0]?.originFileObj,
       name: data.name
     };
-    // const res = await dispath(createBrand(dataReq));
-    // if (!res.error) {
-    //   navigate('/admin/brand');
-    // }
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log(data);
+    const res = await dispath(createProduct(data));
+    if (!res.error) {
+      navigate('/admin/products');
+    }
   };
 
-  const customRequest = ({ file, onError }) => {
-    if (!file) {
-      onError();
-    }
-    setFileList(file);
+  const customRequest = ({ onSuccess, file }) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const imageUrl = e.target.result;
+      setFileList((prevFileList) => [
+        ...prevFileList,
+        {
+          uid: file.uid,
+          name: file.name,
+          status: 'done',
+          url: imageUrl
+        }
+      ]);
+      onSuccess();
+    };
+    reader.readAsDataURL(file);
   };
   const normFile = (e) => {
     console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
-    return e && e.fileList;
+    return e && e.fileList ? e.fileList : [];
   };
   const handleCancel = () => setPreviewOpen(false);
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
@@ -105,14 +114,13 @@ const AddProduct = (props) => {
   return (
     <>
       <Row className="flex">
-        <Title level={2}>Thêm thương hiệu</Title>
+        <Title level={2}>Thêm sản phẩm</Title>
       </Row>
       <Form
         form={form}
         name="basic"
         layout="vertical"
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
         className="form-add-product flex flex-col"
         initialValues={initialValues}
@@ -120,15 +128,15 @@ const AddProduct = (props) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              label="Ten san pham"
+              label="Tên sản phẩm"
               name="name"
-              rules={[{ required: true, message: 'Please input your username!' }]}>
-              <Input placeholder="Name" />
+              rules={[{ required: true, message: 'Please input your name product!' }]}>
+              <Input placeholder="Tên sản phẩm" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              label="Ma san pham"
+              label="Mã sản phẩm"
               name="code"
               rules={[{ required: true, message: 'Please input your code!' }]}>
               <Input placeholder="code" />
@@ -138,25 +146,25 @@ const AddProduct = (props) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              label="Gia"
+              label="Giá"
               name="price_root"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
+              rules={[{ required: true, message: 'Please input your price!' }]}>
               <Input placeholder="price_root" suffix="VND" />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item
-              label="Giam gia"
+              label="Giảm giá"
               name="discount"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
-              <Input placeholder="price_root" suffix="%" />
+              rules={[{ required: true, message: 'Please input your discount!' }]}>
+              <Input placeholder="Discount" suffix="%" />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item
-              label="Gia cuoi"
+              label="Giá cuối"
               name="price"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
+              rules={[{ required: true, message: 'Please input your price!' }]}>
               <Input placeholder="price" suffix="VND" disabled />
             </Form.Item>
           </Col>
@@ -164,29 +172,29 @@ const AddProduct = (props) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              label="Nha bao hanh"
-              name="warranty_unit"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
-              <Input placeholder="description" />
+              label="Nhà bảo hành"
+              name="warranty_house"
+              rules={[{ required: true, message: 'Please input your warranty house!' }]}>
+              <Input placeholder="Nhà bảo hành" />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item
-              label="Thoi gian bao hanh"
+              label="Thời gian bảo hành"
               name="warranty_time"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
-              <Input placeholder="description" />
+              rules={[{ required: true, message: 'Please input your warranty time!' }]}>
+              <Input placeholder="Thời gian bảo hành" />
             </Form.Item>
           </Col>
           <Col span={6}>
             <Form.Item
-              label="Don vi bao hanh"
+              label="Đơn vị bảo hành"
               name="warranty_unit"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
+              rules={[{ required: true, message: 'Please input your warranty unit!' }]}>
               <Select
                 options={[
-                  { value: 1, label: 'Thang' },
-                  { value: 2, label: 'Nam' }
+                  { value: 1, label: 'Tháng' },
+                  { value: 2, label: 'Năm' }
                 ]}
               />
             </Form.Item>
@@ -195,17 +203,17 @@ const AddProduct = (props) => {
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item
-              label="Nha cung cap"
+              label="Nhà cung cấp"
               name="supplier"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
-              <Input placeholder="description" />
+              rules={[{ required: true, message: 'Please input your supplier!' }]}>
+              <Input placeholder="Nhà cung cấp" />
             </Form.Item>
           </Col>
           <Col span={12}>
             <Form.Item
-              label="Thuong hieu"
+              label="Thương hiệu"
               name="brand_id"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
+              rules={[{ required: true, message: 'Please input your brand!' }]}>
               <Select
                 options={brands.map((item) => ({
                   value: item._id,
@@ -215,35 +223,30 @@ const AddProduct = (props) => {
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item
-          label="Mo ta"
-          name="description"
-          rules={[{ required: true, message: 'Please input your code!' }]}>
+        <Form.Item label="Mô tả" name="description">
           <TextArea placeholder="description" />
         </Form.Item>
-        <Form.Item
-          name="images"
-          label="Upload"
-          valuePropName="fileList"
-          getValueFromEvent={normFile}
-          extra=""
-          rules={[{ required: true, message: 'Please input your file!' }]}>
-          {/* <Upload name="logo" customRequest={customRequest} maxCount={1} showUploadList={false}>
-            <Button icon={<UploadOutlined />}>Click to upload</Button>
-            <span className="pl-2">{fileList?.name}</span>
-          </Upload> */}
-          <Upload
-            action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-            listType="picture-card"
-            fileList={fileList}
-            onPreview={handlePreview}
-            onChange={handleChange}>
-            {fileList.length >= 8 ? null : uploadButton}
-          </Upload>
+        <div>
+          <Form.Item
+            name="images"
+            label="Upload"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+            extra=""
+            rules={[{ required: true, message: 'Please input your file!' }]}>
+            <Upload
+              customRequest={customRequest}
+              listType="picture-card"
+              fileList={fileList}
+              onPreview={handlePreview}
+              onChange={handleChange}>
+              {fileList.length >= 5 ? null : uploadButton}
+            </Upload>
+          </Form.Item>
           <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
             <img alt="example" style={{ width: '100%' }} src={previewImage} />
           </Modal>
-        </Form.Item>
+        </div>
         <Form.Item wrapperCol={{ span: 8 }}>
           <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
             Thêm mới
