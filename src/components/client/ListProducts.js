@@ -1,11 +1,61 @@
 import { Pagination } from 'antd';
-import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProduct } from '../../pages/client/homepage/slice';
+import { getImage } from '../../ultils';
+import { useNavigate } from 'react-router-dom';
 
 const ListProducts = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate(0);
+  const products = useSelector((state) => state.homepage?.list);
+  const total = useSelector((state) => state.homepage?.total);
+
   const showTotal = (total) => `Tất cả ${total} sản phẩm`;
   const onChangePage = (page) => {
-    console.log(page);
+    dispatch(
+      getProduct({
+        query: `perpage=12&page=${page}`
+      })
+    );
   };
+  const addToCart = (product) => {
+    let carts = localStorage.getItem('carts') || [];
+    if (carts.length > 0) {
+      carts = JSON.parse(carts);
+      const productIdx = carts.findIndex((item) => item._id == product._id);
+      console.log(productIdx);
+      if (productIdx !== -1) {
+        carts[productIdx]['quantity']++;
+        localStorage.setItem('carts', JSON.stringify(carts));
+      } else {
+        const data = {
+          _id: product._id,
+          thumbnail: product.thumbnail,
+          price: product.price,
+          price_root: product.price_root,
+          quantity: 1
+        };
+        localStorage.setItem('carts', JSON.stringify([...carts, data]));
+      }
+    } else {
+      const data = {
+        _id: product._id,
+        thumbnail: product.thumbnail,
+        price: product.price,
+        price_root: product.price_root,
+        quantity: 1
+      };
+      localStorage.setItem('carts', JSON.stringify([data]));
+    }
+  };
+  useEffect(() => {
+    dispatch(
+      getProduct({
+        query: `perpage=12&page=1`
+      })
+    );
+  }, []);
 
   return (
     <div className="flex w-full max-w-[1650px] flex-col">
@@ -17,41 +67,43 @@ const ListProducts = () => {
       <div
         id="main-list-product"
         className="flex flex-wrap border border-b-0 border-r-0 border-[#ddd]">
-        {Array.from({ length: 15 })
-          .fill(null)
-          .map((item, idx) => (
+        {products &&
+          products.map((item, idx) => (
             <div
               key={idx}
-              className="flex min-h-[370px] w-[calc(100%/6)] cursor-pointer flex-col border-b-[1px] border-r-[1px] text-[13px]">
-              <div className="flex items-center justify-center">
-                <img
-                  src="https://phucanhcdn.com/media/product/250_43637_samsung_galaxy_tab_a7_lite__t225n__grey_a5.jpg"
-                  alt=""
-                  className="object-cover"
-                />
+              className="flex min-h-[370px] w-[calc(100%/6)] flex-col border-b-[1px] border-r-[1px] text-[13px]">
+              <div className="flex max-h-[250px] items-center justify-center overflow-hidden">
+                <img src={getImage(item?.thumbnail?.path)} alt="" className="object-contain" />
               </div>
-              <div className="flex-1 p-2">
-                <p className="pb-1 leading-[18px]">
-                  Máy tính bảng Samsung Galaxy A7 Lite T225 (3GB/ 32GB/ Gray) Máy tính bảng Samsung
-                  Galaxy A7 Lite T225 (3GB/ 32GB/ Gray)
-                </p>
+              <div
+                onClick={() => navigate(`/products/${item._id}`)}
+                className="flex flex-1 cursor-pointer flex-col justify-end p-2">
+                <p className="pb-1 leading-[18px]">{item.name}</p>
                 <div className="leading-4">
-                  <i className="text-[12px]">Giá niêm yết:</i> <span>4.490.000 đ</span>
+                  <i className="text-[12px]">Giá niêm yết:</i> <span> {item.price_root} đ</span>
                 </div>
                 <div className="text-[#d42333]">
-                  <i className="text-[12px]">Giá bán:</i>{' '}
-                  <span className="text-[18px]">3.490.000 đ</span>
+                  <i className="text-[12px]">Giá bán:</i>
+                  <span className="text-[18px]"> {item.price} đ</span>
                 </div>
               </div>
               <div className="flex justify-between px-2 pb-2">
                 <span className="text-[#12bd1b]">Có hàng</span>
-                <div className="text-[#d42333]">Giỏ hàng</div>
+                <div className="text-[#d42333]" onClick={() => addToCart(item)}>
+                  Giỏ hàng
+                </div>
               </div>
             </div>
           ))}
       </div>
       <div id="pagination" className="flex justify-center pt-4">
-        <Pagination size="small" total={30} onChange={onChangePage} showTotal={showTotal} />
+        <Pagination
+          defaultCurrent={1}
+          size="small"
+          total={total}
+          onChange={onChangePage}
+          showTotal={showTotal}
+        />
       </div>
     </div>
   );

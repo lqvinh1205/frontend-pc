@@ -1,4 +1,3 @@
-import React from 'react';
 import CategoryBrand from '../../../components/client/CategoryBrand';
 import CarouselBanner from '../../../components/client/CarouselBanner';
 import ListProducts from '../../../components/client/ListProducts';
@@ -12,7 +11,7 @@ const Homepage = (prop) => {
             <CategoryBrand />
           </div>
           <div id="group-images" className="flex max-w-full flex-1 flex-wrap gap-2">
-            <div className="banner max-w-[900px]">
+            <div id="banner" className="max-w-[900px]">
               <CarouselBanner />
             </div>
             <div id="sub-images" className="flex-1 flex-col bg-red-100">

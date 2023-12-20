@@ -12,6 +12,9 @@ import EditUser from '../pages/admin/User/EditUser';
 import ListProducts from '../pages/admin/Product/ListProducts';
 import AddProduct from '../pages/admin/Product/AddProduct';
 import EditProduct from '../pages/admin/Product/EditProduct';
+import SettingConfiguage from '../pages/admin/Configuage/SettingConfiguage';
+import DetailProduct from '../pages/client/detailProduct';
+import Cart from '../pages/client/cart';
 
 // import { protectedRoutes } from "./protected";
 // import { publicRoutes } from "./public";
@@ -23,6 +26,8 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/" element={<ClientLayout />}>
         <Route index element={<HomePage />} />
+        <Route path="products/:id" element={<DetailProduct />} />
+        <Route path="carts" element={<Cart />} />
       </Route>
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
@@ -40,6 +45,9 @@ export const AppRoutes = () => {
           <Route index element={<ListProducts />} />
           <Route path="add" element={<AddProduct />} />
           <Route path=":id/edit" element={<EditProduct />} />
+        </Route>
+        <Route path="configuage">
+          <Route index element={<SettingConfiguage />} />
         </Route>
       </Route>
     </Routes>

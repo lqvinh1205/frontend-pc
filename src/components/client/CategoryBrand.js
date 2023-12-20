@@ -1,48 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getBrand } from '../../pages/admin/Brand/slice';
 
-const list = [
-  {
-    id: 1,
-    name: 'Asus'
-  },
-  {
-    id: 1,
-    name: 'Lenovo'
-  },
-  {
-    id: 1,
-    name: 'Dell'
-  },
-  {
-    id: 1,
-    name: 'Asus'
-  },
-  {
-    id: 1,
-    name: 'Lenovo'
-  },
-  {
-    id: 1,
-    name: 'Dell'
-  },
-  {
-    id: 1,
-    name: 'Asus'
-  },
-  {
-    id: 1,
-    name: 'Lenovo'
-  },
-  {
-    id: 1,
-    name: 'Dell'
-  }
-];
 const CategoryBrand = () => {
+  const dispatch = useDispatch();
+  const brands = useSelector((state) => state.brand.list);
+
+  useEffect(() => {
+    dispatch(getBrand());
+  }, []);
   return (
     <div className="min-h-[700px] w-[300px] border border-[#de0b00]">
       <ul className="flex flex-col text-[14px] text-[#0000ff]">
-        {list.map((item, idx) => (
+        {brands.map((item, idx) => (
           <a
             key={idx}
             href="/"

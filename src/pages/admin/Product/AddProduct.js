@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Input, Button, Row, Select, Upload, Col, Modal } from 'antd';
+import { Form, Input, Button, Row, Select, Upload, Col, Modal, Card, Space } from 'antd';
 import { Typography } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import './AddProduct.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import TextArea from 'antd/es/input/TextArea';
 import { getBrand } from '../Brand/slice';
 import { createProduct } from './slice';
+import { createFormData } from '../../../ultils';
+import { getConfiguage } from '../Configuage/slice';
 
 const { Title } = Typography;
 
@@ -20,16 +22,20 @@ const AddProduct = (props) => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState([]);
+  const [file, setFile] = useState();
 
   const brands = useSelector((state) => state.brand?.list);
+  const configuages = useSelector((state) => state.configuage?.list);
 
   const onFinish = async (data) => {
-    const dataReq = {
-      images: data?.images[0]?.originFileObj,
-      name: data.name
-    };
-    console.log(data);
-    const res = await dispath(createProduct(data));
+    data.config = JSON.stringify(
+      data.configuage.reduce((accumulator, currentObject) => {
+        accumulator[currentObject._id] = currentObject;
+        return accumulator;
+      }, {})
+    );
+    const dataReq = createFormData(data);
+    const res = await dispath(createProduct(dataReq));
     if (!res.error) {
       navigate('/admin/products');
     }
@@ -48,12 +54,12 @@ const AddProduct = (props) => {
           url: imageUrl
         }
       ]);
+      setFileList((prevList) => [...prevList, file]);
       onSuccess();
     };
     reader.readAsDataURL(file);
   };
   const normFile = (e) => {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -93,7 +99,7 @@ const AddProduct = (props) => {
     discount: 0,
     price: 0,
     warranty_time: 12,
-    warranty_unit: 1
+    warranty_unit: 'Tháng'
   };
   const calculatePrice = (changedValues, allValues) => {
     if ('price_root' in changedValues || 'discount' in changedValues) {
@@ -108,9 +114,18 @@ const AddProduct = (props) => {
       }
     }
   };
+
   useEffect(() => {
+    form.setFieldsValue({
+      configuage: configuages
+    });
+  }, [configuages]);
+
+  useEffect(() => {
+    dispath(getConfiguage());
     dispath(getBrand());
   }, []);
+
   return (
     <>
       <Row className="flex">
@@ -193,8 +208,8 @@ const AddProduct = (props) => {
               rules={[{ required: true, message: 'Please input your warranty unit!' }]}>
               <Select
                 options={[
-                  { value: 1, label: 'Tháng' },
-                  { value: 2, label: 'Năm' }
+                  { value: 'Tháng', label: 'Tháng' },
+                  { value: 'Năm', label: 'Năm' }
                 ]}
               />
             </Form.Item>
@@ -226,6 +241,27 @@ const AddProduct = (props) => {
         <Form.Item label="Mô tả" name="description">
           <TextArea placeholder="description" />
         </Form.Item>
+        <Form.Item
+          name="thumbnail"
+          label="Ảnh chính"
+          valuePropName="fileList"
+          getValueFromEvent={normFile}
+          extra=""
+          rules={[{ required: true, message: 'Please input your file!' }]}>
+          <Upload
+            name="thumbnail"
+            customRequest={({ file, onError }) => {
+              if (!file) {
+                onError();
+              }
+              setFile(file);
+            }}
+            maxCount={1}
+            showUploadList={false}>
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+            <span className="pl-2">{file?.name}</span>
+          </Upload>
+        </Form.Item>
         <div>
           <Form.Item
             name="images"
@@ -235,6 +271,7 @@ const AddProduct = (props) => {
             extra=""
             rules={[{ required: true, message: 'Please input your file!' }]}>
             <Upload
+              name="images"
               customRequest={customRequest}
               listType="picture-card"
               fileList={fileList}
@@ -247,7 +284,48 @@ const AddProduct = (props) => {
             <img alt="example" style={{ width: '100%' }} src={previewImage} />
           </Modal>
         </div>
-        <Form.Item wrapperCol={{ span: 8 }}>
+        <Row gutter={16}>
+          <Form.List name="configuage" className="flex flex-wrap">
+            {(fields) => (
+              <Col span={12} style={{ display: 'flex', rowGap: 16, flexDirection: 'column' }}>
+                {configuages &&
+                  fields?.map((field, indexx) => (
+                    <Card size="small" title={`Cấu hình ${field.name + 1}`} key={indexx}>
+                      <Form.Item
+                        label="Tên cấu hình"
+                        name={[field.name, 'name']}
+                        rules={[{ required: true, message: 'Please input your name!' }]}>
+                        <Input disabled />
+                      </Form.Item>
+                      {/* Nest Form.List */}
+                      <Form.Item label="Cấu hình chi tiết">
+                        <Form.List name={[field.name, 'list']}>
+                          {(subFields) => (
+                            <div
+                              style={{ display: 'flex', flexDirection: 'column' }}
+                              className="first:mt-2">
+                              {subFields.map((subField, idx) => (
+                                <Space key={idx}>
+                                  <Form.Item label="Tiêu đề" name={[subField.name, 'name']}>
+                                    <Input placeholder="tiêu đề" disabled />
+                                  </Form.Item>
+                                  <Form.Item label="Nội dung" name={[subField.name, 'value']}>
+                                    <Input placeholder="nội dung" />
+                                  </Form.Item>
+                                </Space>
+                              ))}
+                            </div>
+                          )}
+                        </Form.List>
+                      </Form.Item>
+                    </Card>
+                  ))}
+              </Col>
+            )}
+          </Form.List>
+        </Row>
+
+        <Form.Item wrapperCol={{ span: 8 }} className="mt-2">
           <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
             Thêm mới
           </Button>

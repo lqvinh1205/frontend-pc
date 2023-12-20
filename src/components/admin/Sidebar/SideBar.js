@@ -41,6 +41,9 @@ const SideBar = () => {
         <Menu.Item key="9" icon={<FileOutlined />}>
           <Link to="/admin/products">Sản phẩm</Link>
         </Menu.Item>
+        <Menu.Item key="10" icon={<FileOutlined />}>
+          <Link to="/admin/configuage">Cài đặt cấu hình</Link>
+        </Menu.Item>
       </Menu>
     </>
   );

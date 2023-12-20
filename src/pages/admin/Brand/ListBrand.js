@@ -30,12 +30,7 @@ const ListBrand = (props) => {
       dataIndex: 'logo',
       render: (item) => {
         return (
-          <Avatar
-            className="mb-2"
-            shape="square"
-            size="large"
-            icon={<img alt="" src={getImage(item.path)} />}
-          />
+          <Avatar shape="square" size="large" icon={<img alt="" src={getImage(item.path)} />} />
         );
       }
     },
@@ -80,7 +75,7 @@ const ListBrand = (props) => {
         columns={columns}
         dataSource={brands}
         bordered
-        title={() => <Typography.Title level={3}>List Catgory</Typography.Title>}
+        title={() => <Typography.Title level={3}>Danh sách sản phẩm</Typography.Title>}
         pagination={{
           total: brands?.lenght
         }}

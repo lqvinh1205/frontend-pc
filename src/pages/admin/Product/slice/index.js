@@ -7,7 +7,6 @@ export const createProduct = createAsyncThunk('product/createProduct', async (pa
   try {
     const res = await api.post(apiConstants.PRODUCT, payload, {
       headers: {
-        Accept: 'application/json',
         'Content-Type': 'multipart/form-data'
       }
     });
@@ -28,7 +27,7 @@ export const getProductById = createAsyncThunk('product/getProductById', async (
 });
 
 export const editProduct = createAsyncThunk('product/editProduct', async (payload) => {
-  const res = await api.patch(`${apiConstants.PRODUCT}/${payload.id}`, payload, {
+  const res = await api.patch(`${apiConstants.PRODUCT}/${payload.id}`, payload.formData, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'multipart/form-data'
@@ -43,7 +42,8 @@ export const deleteProduct = createAsyncThunk('product/deleteProduct', async (pa
 });
 
 const initialState = {
-  list: []
+  list: [],
+  total: 0
 };
 
 export const productSlice = createSlice({
@@ -64,6 +64,7 @@ export const productSlice = createSlice({
       })
       .addCase(getProduct.fulfilled, (state, action) => {
         state.list = action.payload.data;
+        state.list = action.payload.total;
       })
       .addCase(editProduct.fulfilled, (state, action) => {
         message.success('Cập nhật thành công');

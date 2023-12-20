@@ -1,45 +1,70 @@
-import { Button, Modal, Row, Table, Typography } from 'antd';
+import { Avatar, Button, Modal, Row, Table, Typography } from 'antd';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteProduct, getProduct } from './slice';
+import { getImage } from '../../../ultils';
 
 const ListProducts = (props) => {
-  // const products = useAppSelector((data) => data.product.values);
-  // const dispath = useAppDispatch();
+  const products = useSelector((data) => data.product.list);
+  const total = useSelector((data) => data.product.total);
+  const dispatch = useDispatch();
 
   const handleRemove = (id) => {
     Modal.confirm({
       title: 'Thông báo',
       content: 'Bạn có chắc muốn xóa',
-      onOk: () => () => {}
+      onOk: () =>
+        dispatch(deleteProduct(id)).then((res) => {
+          if (!res.error) {
+            dispatch(getProduct());
+          }
+        })
     });
   };
   const columns = [
     {
-      title: 'Name Product',
+      title: 'Mã code',
+      className: 'column-money',
+      dataIndex: 'code'
+    },
+    {
+      title: 'Tên sản phẩm',
       dataIndex: 'name',
       render: (text) => <a href="/">{text}</a>
     },
     {
-      title: 'Price',
-      className: 'column-money',
+      title: 'Ảnh',
+      dataIndex: 'thumbnail',
+      render: (item) => {
+        return (
+          <Avatar shape="square" size="large" icon={<img alt="" src={getImage(item?.path)} />} />
+        );
+      }
+    },
+    {
+      title: 'Giá gốc',
+      dataIndex: 'price_root'
+    },
+    {
+      title: 'Giảm giá',
+      dataIndex: 'discount'
+    },
+    {
+      title: 'Giá',
       dataIndex: 'price'
     },
     {
-      title: 'Technology',
-      dataIndex: 'technology'
+      title: 'Thời gian bảo hành',
+      render: (_) => {
+        console.log(_);
+        return <span>{`${_.warranty_time} ${_.warranty_unit}`}</span>;
+      }
     },
     {
-      title: 'Speed',
-      dataIndex: 'speed'
-    },
-    {
-      title: 'Boost',
-      dataIndex: 'boost'
-    },
-    {
-      title: 'Category',
-      dataIndex: 'category'
+      title: 'Nhà bảo hành',
+      dataIndex: 'warranty_time'
     },
     {
       title: 'Action',
@@ -48,7 +73,7 @@ const ListProducts = (props) => {
       render: (id) => (
         <Row className="flex justify-end gap-2">
           <Link to={`/admin/products/${id}/edit`}>
-            <Button type="primary" icon={<EditOutlined />}></Button>
+            <Button type="primary" className="bg-[#1677ff]" icon={<EditOutlined />}></Button>
           </Link>
           <Button
             type="primary"
@@ -61,7 +86,7 @@ const ListProducts = (props) => {
   ];
 
   useEffect(() => {
-    // dispath(listProduct());
+    dispatch(getProduct());
   }, []);
   return (
     <>
@@ -75,14 +100,11 @@ const ListProducts = (props) => {
 
       <Table
         columns={columns}
-        dataSource={[]}
+        dataSource={products}
         bordered
         title={() => <Typography.Title level={3}>Danh sách sản phẩm</Typography.Title>}
         pagination={{
-          total: 10,
-          pageSize: 5,
-          showSizeChanger: true,
-          pageSizeOptions: [5, 6, 7]
+          total: total
         }}
       />
     </>

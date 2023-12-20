@@ -1,6 +1,15 @@
-import React from 'react';
+import { Badge } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderMiddle = () => {
+  const [count, setCount] = useState(0);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem('carts') && Array.isArray(JSON.parse(localStorage.getItem('carts'))))
+      setCount(JSON.parse(localStorage.getItem('carts')).length);
+  }, [localStorage.getItem('carts')]);
+
   return (
     <div className="flex justify-center">
       <div className="flex h-[90px] w-full max-w-[1650px] flex-wrap items-center">
@@ -32,11 +41,11 @@ const HeaderMiddle = () => {
           <span className="text-[26px]">1900 2164</span>
         </div>
         <div className="ml-5">
-          <a href="/">
-            <button className="h-[34px] rounded-[4px] border bg-[#dd0000] px-[5px] text-[14px] text-white">
-              Giỏ hàng
-            </button>
-          </a>
+          <button
+            onClick={() => navigate('/carts')}
+            className="h-[34px] rounded-[4px] border bg-[#dd0000] px-[5px] text-[14px] text-white">
+            Giỏ hàng {count > 0 && <Badge count={count} color="#faad14" />}
+          </button>
         </div>
       </div>
     </div>
