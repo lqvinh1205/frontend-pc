@@ -1,11 +1,12 @@
 import { Avatar, Button, Form, Input, Table, Typography } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { getImage } from '../../../ultils';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const onFinish = (values) => {
     console.log('Success:', values);
@@ -41,7 +42,7 @@ const Cart = () => {
     },
     {
       title: 'Thành tiền',
-      dataIndex: 'warranty_time'
+      dataIndex: 'total'
     },
     {
       title: '',
@@ -56,6 +57,11 @@ const Cart = () => {
       )
     }
   ];
+  useEffect(() => {
+    if (localStorage.getItem('carts')) {
+      setProducts(JSON.parse(localStorage.getItem('carts')));
+    }
+  }, []);
   return (
     <div className="mx-auto my-2 flex w-full max-w-[1650px] flex-col gap-4">
       <div className="mt-2 flex items-center gap-3">
@@ -70,7 +76,7 @@ const Cart = () => {
         <div className="col-span-2">
           <Table
             columns={columns}
-            dataSource={[]}
+            dataSource={products}
             bordered
             pagination={{
               total: 10

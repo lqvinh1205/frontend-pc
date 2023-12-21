@@ -1,33 +1,33 @@
 import React from 'react';
 import { DownOutlined } from '@ant-design/icons';
 import { Layout, Badge, Avatar, Dropdown, Space } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
-const items = [
-  {
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-        Về trang chủ
-      </a>
-    ),
-    key: '0'
-  },
-  {
-    label: (
-      <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-        2nd menu item
-      </a>
-    ),
-    key: '1'
-  },
-  {
-    type: 'divider'
-  },
-  {
-    label: 'Đăng xuất',
-    key: '3'
-  }
-];
 const HeaderAdmin = () => {
+  const navigate = useNavigate();
+
+  const items = [
+    {
+      label: <button onClick={() => navigate('/')}>Về trang chủ</button>,
+      key: '0'
+    },
+    {
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          2nd menu item
+        </a>
+      ),
+      key: '1'
+    },
+    {
+      type: 'divider'
+    },
+    {
+      label: 'Đăng xuất',
+      key: '3'
+    }
+  ];
+
   return (
     <Layout.Header
       className="bg-white"

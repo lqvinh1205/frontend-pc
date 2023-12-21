@@ -1,4 +1,4 @@
-import { Pagination } from 'antd';
+import { Pagination, message } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../pages/client/homepage/slice';
@@ -48,6 +48,7 @@ const ListProducts = () => {
       };
       localStorage.setItem('carts', JSON.stringify([data]));
     }
+    message.success("Thêm sản phẩm vào giỏ hàng thành công")
   };
   useEffect(() => {
     dispatch(

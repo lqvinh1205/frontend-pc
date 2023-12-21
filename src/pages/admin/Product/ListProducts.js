@@ -100,7 +100,7 @@ const ListProducts = (props) => {
 
       <Table
         columns={columns}
-        dataSource={products}
+        dataSource={products.length > 0 ? products : []}
         bordered
         title={() => <Typography.Title level={3}>Danh sách sản phẩm</Typography.Title>}
         pagination={{

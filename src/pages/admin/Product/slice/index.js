@@ -64,7 +64,7 @@ export const productSlice = createSlice({
       })
       .addCase(getProduct.fulfilled, (state, action) => {
         state.list = action.payload.data;
-        state.list = action.payload.total;
+        state.total = action.payload.total;
       })
       .addCase(editProduct.fulfilled, (state, action) => {
         message.success('Cập nhật thành công');
