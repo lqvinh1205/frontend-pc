@@ -1,20 +1,99 @@
-import { Avatar, Button, Form, Input, Table, Typography } from 'antd';
+import { Avatar, Button, Form, Input, Modal, Table, message } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React, { useEffect, useState } from 'react';
 import { getImage } from '../../../ultils';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { postCartProducts } from './slice';
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
-  const onFinish = (values) => {
-    console.log('Success:', values);
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
+
+  const onFinish = async (values) => {
+    let carts = localStorage.getItem('carts');
+    carts = JSON.parse(carts);
+    if (carts.length > 0) {
+      const dataReq = {
+        ...values,
+        carts: JSON.parse(localStorage.getItem('carts'))
+      };
+      const { payload } = await dispatch(postCartProducts(dataReq));
+      if (payload) {
+        localStorage.removeItem('carts');
+        setProducts([]);
+        message.success('Đặt hàng thành công!');
+        form.setFieldsValue({
+          username: '',
+          email: '',
+          phone_number: '',
+          address: '',
+          note: ''
+        });
+      }
+    } else {
+      message.warning('Giỏ hàng trống');
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
   };
-  const handleRemove = (id) => {};
+  const changeQuantity = (id, type) => {
+    let carts = localStorage.getItem('carts');
+    carts = JSON.parse(carts);
+    if (carts.length > 0) {
+      const productIdx = carts.findIndex((item) => item._id == id);
+      if (productIdx !== -1) {
+        switch (type) {
+          case 'increment':
+            carts[productIdx]['quantity']++;
+            localStorage.setItem('carts', JSON.stringify(carts));
+            setProducts(carts);
+            break;
+          case 'decrement':
+            if (carts[productIdx]['quantity'] > 1) {
+              carts[productIdx]['quantity']--;
+              localStorage.setItem('carts', JSON.stringify(carts));
+              setProducts(carts);
+            } else {
+              Modal.confirm({
+                title: 'Thông báo',
+                content: 'Bạn có chắc muốn xóa',
+                onOk: () => {
+                  carts.splice(productIdx, 1);
+                  localStorage.setItem('carts', JSON.stringify(carts));
+                  setProducts(carts);
+                }
+              });
+            }
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  };
+  const handleRemove = (id) => {
+    let carts = localStorage.getItem('carts') || [];
+    if (carts.length > 0) {
+      carts = JSON.parse(carts);
+      const productIdx = carts.findIndex((item) => item._id == id);
+      if (productIdx !== -1) {
+        Modal.confirm({
+          title: 'Thông báo',
+          content: 'Bạn có chắc muốn xóa',
+          onOk: () => {
+            carts.splice(productIdx, 1);
+            localStorage.setItem('carts', JSON.stringify(carts));
+            setProducts(carts);
+          }
+        });
+      }
+    }
+  };
   const columns = [
     {
       title: 'Tên sản phẩm',
@@ -33,16 +112,41 @@ const Cart = () => {
     {
       title: 'Giá',
       render: (_) => {
-        return <span>{`${_.warranty_time} ${_.warranty_unit}`}</span>;
+        return (
+          <div className="flex justify-between">
+            <span className="line-through">{`${_.price_root}`} VND</span>
+            <span className="text-red-600">{`${_.price}`} VND</span>
+          </div>
+        );
       }
     },
     {
       title: 'Số lượng',
-      dataIndex: 'quantity'
+      render: (_) => {
+        return (
+          <div className="flex gap-2">
+            <MinusSquareOutlined
+              className="cursor-pointer"
+              onClick={() => changeQuantity(_._id, 'decrement')}
+            />
+            <span>{_.quantity}</span>
+            <PlusSquareOutlined
+              className="cursor-pointer"
+              onClick={() => changeQuantity(_._id, 'increment')}
+            />
+          </div>
+        );
+      }
     },
     {
       title: 'Thành tiền',
-      dataIndex: 'total'
+      render: (_) => {
+        return (
+          <div className="flex justify-between">
+            <span className="text-red-600">{`${_.price * _.quantity}`} VND</span>
+          </div>
+        );
+      }
     },
     {
       title: '',
@@ -92,6 +196,7 @@ const Cart = () => {
             </p>
             <div className="mt-2">
               <Form
+                form={form}
                 name="basic"
                 layout="vertical"
                 onFinish={onFinish}
@@ -114,7 +219,7 @@ const Cart = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your username!'
+                      message: 'Please input your phone number!'
                     }
                   ]}>
                   <Input />
@@ -128,19 +233,19 @@ const Cart = () => {
                   name="email"
                   rules={[
                     {
-                      required: true,
-                      message: 'Please input your username!'
+                      type: 'email',
+                      message: 'Invalid type email!'
                     }
                   ]}>
                   <Input />
                 </Form.Item>
                 <Form.Item
                   label={<p style={{ fontSize: '16px', fontWeight: 700 }}>Địa chỉ nhận hàng</p>}
-                  name="email"
+                  name="address"
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your username!'
+                      message: 'Please input your address!'
                     }
                   ]}>
                   <Input />
@@ -153,7 +258,9 @@ const Cart = () => {
               </Form>
             </div>
           </div>
-          <div className="flex flex-col items-center bg-[#de0b00] p-3 text-[20px] text-white">
+          <div
+            className="flex cursor-pointer flex-col items-center bg-[#de0b00] p-3 text-[20px] text-white"
+            onClick={() => form.submit()}>
             <div>ĐẶT HÀNG</div>
             <div className="text-[14px]">Tư vấn viên sẽ gọi điện thoại xác nhận</div>
           </div>

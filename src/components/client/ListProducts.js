@@ -24,7 +24,6 @@ const ListProducts = () => {
     if (carts.length > 0) {
       carts = JSON.parse(carts);
       const productIdx = carts.findIndex((item) => item._id == product._id);
-      console.log(productIdx);
       if (productIdx !== -1) {
         carts[productIdx]['quantity']++;
         localStorage.setItem('carts', JSON.stringify(carts));
@@ -34,7 +33,8 @@ const ListProducts = () => {
           thumbnail: product.thumbnail,
           price: product.price,
           price_root: product.price_root,
-          quantity: 1
+          quantity: 1,
+          name: product.name
         };
         localStorage.setItem('carts', JSON.stringify([...carts, data]));
       }
@@ -44,11 +44,12 @@ const ListProducts = () => {
         thumbnail: product.thumbnail,
         price: product.price,
         price_root: product.price_root,
-        quantity: 1
+        quantity: 1,
+        name: product.name
       };
       localStorage.setItem('carts', JSON.stringify([data]));
     }
-    message.success("Thêm sản phẩm vào giỏ hàng thành công")
+    message.success('Thêm sản phẩm vào giỏ hàng thành công');
   };
   useEffect(() => {
     dispatch(
@@ -90,7 +91,7 @@ const ListProducts = () => {
               </div>
               <div className="flex justify-between px-2 pb-2">
                 <span className="text-[#12bd1b]">Có hàng</span>
-                <div className="text-[#d42333]" onClick={() => addToCart(item)}>
+                <div className="cursor-pointer text-[#d42333]" onClick={() => addToCart(item)}>
                   Giỏ hàng
                 </div>
               </div>
