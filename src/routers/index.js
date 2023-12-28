@@ -15,6 +15,7 @@ import EditProduct from '../pages/admin/Product/EditProduct';
 import SettingConfiguage from '../pages/admin/Configuage/SettingConfiguage';
 import DetailProduct from '../pages/client/detailProduct';
 import Cart from '../pages/client/cart';
+import ListBills from '../pages/admin/Bill/ListBill';
 
 // import { protectedRoutes } from "./protected";
 // import { publicRoutes } from "./public";
@@ -48,6 +49,9 @@ export const AppRoutes = () => {
         </Route>
         <Route path="configuage">
           <Route index element={<SettingConfiguage />} />
+        </Route>
+        <Route path="bills">
+          <Route index element={<ListBills />} />
         </Route>
       </Route>
     </Routes>

@@ -7,16 +7,6 @@ import { getImage } from '../../../ultils';
 import CarouselDetailProduct from '../../../components/client/CarouselDetailProduct';
 import { CaretRightOutlined } from '@ant-design/icons';
 
-const contentStyle = {
-  height: '300px',
-  color: '#fff',
-  lineHeight: '300px',
-  textAlign: 'center',
-  background: '#364d79',
-  display: 'flex',
-  alignItems: 'center'
-};
-
 const DetailProduct = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
