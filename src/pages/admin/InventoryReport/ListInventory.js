@@ -1,0 +1,73 @@
+import { Avatar, Button, Modal, Row, Table, Typography } from 'antd';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getImage } from '../../../ultils';
+import { getInventory } from './slice';
+
+const ListInventory = (props) => {
+  const products = useSelector((data) => data.inventory.list);
+  const total = useSelector((data) => data.inventory.total);
+  const dispatch = useDispatch();
+
+  const columns = [
+    {
+      title: 'Mã code',
+      className: 'column-money',
+      dataIndex: 'product_id',
+      render: (product) => <span>{product.code}</span>
+    },
+    {
+      title: 'Tên sản phẩm',
+      dataIndex: 'product_id',
+      render: (product) => <span>{product.name}</span>
+    },
+    {
+      title: 'Thương hiệu',
+      dataIndex: 'product_id',
+      render: (product) => <span>{product.brand_id.name}</span>
+    },
+    {
+      title: 'Giá bán',
+      dataIndex: 'product_id',
+      align: 'center',
+      render: (product) => <span>{product.price} VND</span>
+    },
+    {
+      title: 'Giá vốn',
+      dataIndex: 'price',
+      align: 'center',
+      render: (text) => <span>{text} VND</span>
+    },
+    {
+      title: 'Tồn kho',
+      align: 'center',
+      dataIndex: 'quantity_in_stock',
+      render: (text) => <span>{text}</span>
+    }
+  ];
+
+  useEffect(() => {
+    dispatch(getInventory());
+  }, []);
+  return (
+    <>
+      <Row className="mb-3 justify-end">
+        <Button type="primary" className="bg-[#1677ff]">
+          Xuất báo cáo
+        </Button>
+      </Row>
+
+      <Table
+        columns={columns}
+        dataSource={products.length > 0 ? products : []}
+        bordered
+        title={() => <Typography.Title level={3}>Báo cáo tồn kho</Typography.Title>}
+        pagination={{
+          total: total
+        }}
+      />
+    </>
+  );
+};
+
+export default ListInventory;

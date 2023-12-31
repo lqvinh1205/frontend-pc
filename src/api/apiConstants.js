@@ -4,7 +4,9 @@ const apiConstants = {
   USER: '/v1/users',
   PRODUCT: '/v1/products',
   CONFIGUAGE: '/v1/configuage',
-  BILL: '/v1/bills'
+  BILL: '/v1/bills',
+  RECEIPT: '/v1/receipts',
+  INVENTORY: '/v1/report/inventory'
 };
 
 export default apiConstants;

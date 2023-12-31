@@ -16,6 +16,9 @@ import SettingConfiguage from '../pages/admin/Configuage/SettingConfiguage';
 import DetailProduct from '../pages/client/detailProduct';
 import Cart from '../pages/client/cart';
 import ListBills from '../pages/admin/Bill/ListBill';
+import ListReceipt from '../pages/admin/Receipt/ListReceipt';
+import AddReceipt from '../pages/admin/Receipt/AddReceipt';
+import InventoryReport from '../pages/admin/InventoryReport/ListInventory';
 
 // import { protectedRoutes } from "./protected";
 // import { publicRoutes } from "./public";
@@ -52,6 +55,13 @@ export const AppRoutes = () => {
         </Route>
         <Route path="bills">
           <Route index element={<ListBills />} />
+        </Route>
+        <Route path="receipt">
+          <Route index element={<ListReceipt />} />
+          <Route index path="add" element={<AddReceipt />} />
+        </Route>
+        <Route path="inventory">
+          <Route index element={<InventoryReport />} />
         </Route>
       </Route>
     </Routes>

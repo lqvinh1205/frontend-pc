@@ -4,25 +4,25 @@ import { useDispatch } from 'react-redux';
 import { getImage } from '../../../ultils';
 import { getBillById } from '../../../pages/admin/Bill/slice';
 
-const ModalBillDetail = ({ id, isModalOpen, showModal, handleCancel }) => {
+const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
   const dispatch = useDispatch();
 
   const [billDetail, setBillDetail] = useState([]);
   const columns = [
     {
       title: 'Tên sản phẩm',
-      dataIndex: 'product_id',
-      render: (product) => <a href="/">{product.name}</a>
+      dataIndex: 'receipt_detail_id',
+      render: (data) => <a href="/">{data[0]?.product_id?.name}</a>
     },
     {
       title: 'Ảnh',
-      dataIndex: 'product_id',
-      render: (item) => {
+      dataIndex: 'receipt_detail_id',
+      render: (data) => {
         return (
           <Avatar
             shape="square"
             size="large"
-            icon={<img alt="" src={getImage(item.thumbnail.path)} />}
+            icon={<img alt="" src={getImage(data[0]?.product_id?.thumbnail?.path)} />}
           />
         );
       }
@@ -106,7 +106,7 @@ const ModalBillDetail = ({ id, isModalOpen, showModal, handleCancel }) => {
     if (id) {
       getDetailBill();
     }
-  }, []);
+  }, [id]);
   return (
     <>
       {billDetail && (
@@ -124,4 +124,4 @@ const ModalBillDetail = ({ id, isModalOpen, showModal, handleCancel }) => {
     </>
   );
 };
-export default ModalBillDetail;
+export default ModalReceiptDetail;

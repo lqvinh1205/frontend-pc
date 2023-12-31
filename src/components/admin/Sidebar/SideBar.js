@@ -33,18 +33,20 @@ const SideBar = () => {
         <Menu.Item key="3" icon={<UserOutlined />}>
           <Link to="/admin/users">Người dùng</Link>
         </Menu.Item>
-        <SubMenu key="sub2" icon={<TeamOutlined />} title="Báo cáo">
-          <Menu.Item key="6">
-            <Link to="/admin/bills">Hóa đơn</Link>
-          </Menu.Item>
-          <Menu.Item key="7">Nhập kho</Menu.Item>
-          <Menu.Item key="8">Xuất kho</Menu.Item>
-        </SubMenu>
         <Menu.Item key="9" icon={<FileOutlined />}>
           <Link to="/admin/products">Sản phẩm</Link>
         </Menu.Item>
         <Menu.Item key="10" icon={<FileOutlined />}>
           <Link to="/admin/configuage">Cài đặt cấu hình</Link>
+        </Menu.Item>
+        <Menu.Item key="11" icon={<FileOutlined />}>
+          <Link to="/admin/receipt">Nhập kho</Link>
+        </Menu.Item>
+        <Menu.Item key="6" icon={<FileOutlined />}>
+          <Link to="/admin/bills">Hóa đơn</Link>
+        </Menu.Item>
+        <Menu.Item key="7" icon={<FileOutlined />}>
+          <Link to="/admin/inventory">Báo cáo tồn kho</Link>
         </Menu.Item>
       </Menu>
     </>
