@@ -1,4 +1,4 @@
-import { Pagination, message } from 'antd';
+import { Empty, Pagination, message } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProduct } from '../../pages/client/homepage/slice';
@@ -69,7 +69,7 @@ const ListProducts = () => {
       <div
         id="main-list-product"
         className="flex flex-wrap border border-b-0 border-r-0 border-[#ddd]">
-        {products &&
+        {products.length ? (
           products.map((item, idx) => (
             <div
               key={idx}
@@ -96,7 +96,12 @@ const ListProducts = () => {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="flex-1 py-4">
+            <Empty />
+          </div>
+        )}
       </div>
       <div id="pagination" className="flex justify-center pt-4">
         <Pagination
