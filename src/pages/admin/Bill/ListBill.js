@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteBill, getBill } from './slice';
 import dayjs from 'dayjs';
 import ModalBillDetail from '../../../components/admin/ModalBillDetail';
+import { exportToExcel } from '../../../ultils';
 
 const ListBills = (props) => {
   const bills = useSelector((data) => data.bill.list);
@@ -88,14 +89,49 @@ const ListBills = (props) => {
     }
   ];
 
+  const exportToExcelReceipt = () => {
+    const billDetail = bills.map((bill) => {
+      if (bill.hasOwnProperty('list')) {
+        const { list, ...billWithoutList } = bill;
+        return list.map((item) => ({
+          ...item,
+          bill: billWithoutList
+        }));
+      }
+      return [];
+    });
+
+    const data = [
+      ['Thời gian', 'Tên khách hàng', 'Người bán', 'Tên hàng', 'Số lượng', 'Giá bán'],
+      ...billDetail.flat().map((item) => {
+        console.log(item);
+        return [
+          dayjs(item.bill.sale_date).format('DD/MM/YYYY'),
+          item.bill.username,
+          'Website',
+          item.receipt.product_id[0]?.name,
+          item.quantity,
+          item.price
+        ];
+      })
+    ];
+    exportToExcel(data);
+  };
+
   useEffect(() => {
     dispatch(getBill());
   }, []);
   return (
     <>
+      <Row className="mb-3 justify-end">
+        <Button type="primary" className="bg-[#1677ff]" onClick={exportToExcelReceipt}>
+          Xuất báo cáo
+        </Button>
+      </Row>
       <Table
         columns={columns}
         dataSource={bills.length > 0 ? bills : []}
+        rowKey="_id"
         bordered
         title={() => <Typography.Title level={3}>Danh sách hóa đơn</Typography.Title>}
         pagination={{

@@ -1,8 +1,8 @@
-import { Avatar, Button, Modal, Row, Table, Typography } from 'antd';
+import { Button, Row, Table, Typography } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getImage } from '../../../ultils';
 import { getInventory } from './slice';
+import { exportToExcel } from '../../../ultils';
 
 const ListInventory = (props) => {
   const products = useSelector((data) => data.inventory.list);
@@ -46,13 +46,30 @@ const ListInventory = (props) => {
     }
   ];
 
+  const exportToExcelInventory = () => {
+    const data = [
+      columns.map((item) => item.title),
+      ...products.map((item) => {
+        return [
+          item.product_id.code,
+          item.product_id.name,
+          item.product_id.brand_id.name,
+          item.product_id.price,
+          item.price,
+          item.quantity_in_stock
+        ];
+      })
+    ];
+    exportToExcel(data);
+  };
+
   useEffect(() => {
     dispatch(getInventory());
   }, []);
   return (
     <>
       <Row className="mb-3 justify-end">
-        <Button type="primary" className="bg-[#1677ff]">
+        <Button type="primary" className="bg-[#1677ff]" onClick={exportToExcelInventory}>
           Xuất báo cáo
         </Button>
       </Row>

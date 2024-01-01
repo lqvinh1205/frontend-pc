@@ -1,11 +1,10 @@
-import { Avatar, Button, Modal, Row, Table, Typography } from 'antd';
-import React, { useEffect, useState } from 'react';
+import { Button, Row, Table, Typography } from 'antd';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { EyeOutlined, DeleteOutlined } from '@ant-design/icons';
-import { deleteReceipt, getReceipt } from './slice';
+import { EyeOutlined } from '@ant-design/icons';
+import { getReceipt } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import './Receipt.css';
-import { getImage } from '../../../ultils';
 import ModalReceiptDetail from '../../../components/admin/ModalReceiptDetail';
 import dayjs from 'dayjs';
 
@@ -24,19 +23,6 @@ const ListReceipt = (props) => {
   const hanldeShowModal = (id) => {
     showModal();
     setId(id);
-  };
-
-  const handleRemove = (id) => {
-    Modal.confirm({
-      title: 'Thông báo',
-      content: 'Bạn có chắc muốn xóa',
-      onOk: () =>
-        dispatch(deleteReceipt(id)).then((res) => {
-          if (!res.error) {
-            dispatch(getReceipt());
-          }
-        })
-    });
   };
 
   const columns = [
@@ -67,7 +53,6 @@ const ListReceipt = (props) => {
       )
     }
   ];
-
   useEffect(() => {
     dispatch(getReceipt());
   }, []);

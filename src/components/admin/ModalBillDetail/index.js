@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getImage } from '../../../ultils';
 import { getBillById } from '../../../pages/admin/Bill/slice';
+import dayjs from 'dayjs';
 
 const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
   const dispatch = useDispatch();
@@ -84,7 +85,7 @@ const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
     {
       key: '7',
       label: 'Ngày bán',
-      children: billDetail?.sale_date
+      children: dayjs(billDetail?.sale_date).format('DD/MM/YYYY')
     },
     {
       key: '8',
