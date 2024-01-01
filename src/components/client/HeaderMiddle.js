@@ -1,10 +1,34 @@
 import { Badge } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getProduct } from '../../pages/client/homepage/slice';
 
 const HeaderMiddle = () => {
   const [count, setCount] = useState(0);
+  const [search, setSearch] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    await dispatch(
+      getProduct({
+        query: `perpage=12&page=1` + (search ? `&search=${search}` : '')
+      })
+    );
+  };
+  const handleChangeSearch = async (e) => {
+    const search = e.target.value;
+    setSearch(search);
+    if (search === '') {
+      await dispatch(
+        getProduct({
+          query: `perpage=12&page=1`
+        })
+      );
+    }
+  };
   useEffect(() => {
     if (localStorage.getItem('carts') && Array.isArray(JSON.parse(localStorage.getItem('carts'))))
       setCount(JSON.parse(localStorage.getItem('carts')).length);
@@ -30,8 +54,12 @@ const HeaderMiddle = () => {
               name=""
               id=""
               placeholder="Nhập từ khóa tìm kiếm"
+              onChange={handleChangeSearch}
             />
-            <button type="submit" className="h-auto bg-[#de0b00] px-2 text-[13px] text-white">
+            <button
+              type="submit"
+              className="h-auto bg-[#de0b00] px-2 text-[13px] text-white"
+              onClick={handleSearch}>
               Search
             </button>
           </form>

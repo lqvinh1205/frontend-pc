@@ -1,8 +1,11 @@
 import CategoryBrand from '../../../components/client/CategoryBrand';
 import CarouselBanner from '../../../components/client/CarouselBanner';
 import ListProducts from '../../../components/client/ListProducts';
+import { Spin } from 'antd';
+import { useSelector } from 'react-redux';
 
 const Homepage = (prop) => {
+  const loading = useSelector((state) => state.homepage.loading);
   return (
     <div className="mt-2">
       <div className="mx-auto w-full max-w-[1650px]">
@@ -43,6 +46,7 @@ const Homepage = (prop) => {
           <ListProducts />
         </div>
       </div>
+      <Spin spinning={loading} fullscreen />
     </div>
   );
 };

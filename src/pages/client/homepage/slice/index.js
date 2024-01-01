@@ -9,7 +9,8 @@ export const getProduct = createAsyncThunk('homepage/getProduct', async (payload
 
 const initialState = {
   list: [],
-  total: 0
+  total: 0,
+  loading: false
 };
 
 export const homepageSlice = createSlice({
@@ -17,9 +18,16 @@ export const homepageSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getProduct.pending, (state, action) => {
+      state.loading = true;
+    });
     builder.addCase(getProduct.fulfilled, (state, action) => {
       state.list = action.payload.data;
       state.total = action.payload.total;
+      state.loading = false;
+    });
+    builder.addCase(getProduct.rejected, (state, action) => {
+      state.loading = false;
     });
   }
 });
