@@ -13,17 +13,17 @@ const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
   const columns = [
     {
       title: 'Mã sản phẩm',
-      dataIndex: 'receipt_detail_id',
-      render: (data) => <span>{data?.product_id?.code}</span>
+      dataIndex: 'product_id',
+      render: (data) => <span>{data?.code}</span>
     },
     {
       title: 'Tên sản phẩm',
-      dataIndex: 'receipt_detail_id',
-      render: (data) => <span>{data?.product_id?.name}</span>
+      dataIndex: 'product_id',
+      render: (data) => <span>{data?.name}</span>
     },
     {
       title: 'Ảnh',
-      dataIndex: 'receipt_detail_id',
+      dataIndex: 'product_id',
       render: (item) => {
         return (
           <Avatar

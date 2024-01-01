@@ -9,6 +9,7 @@ import { createFormData, getImage } from '../../../ultils';
 import { editProduct, getProductById } from './slice';
 import TextArea from 'antd/es/input/TextArea';
 import { getBrand } from '../Brand/slice';
+import { getConfiguage } from '../Configuage/slice';
 
 const { Title } = Typography;
 
@@ -130,9 +131,15 @@ const EditProduct = (props) => {
     }));
     setThumbnail(payload.thumbnail?.path);
     delete payload.thumbnail;
-    setConfig(
-      Object.keys(JSON.parse(payload.config)).map((item) => JSON.parse(payload.config)[item])
-    );
+    console.log(payload.config);
+    if (payload?.config) {
+      setConfig(
+        Object.keys(JSON.parse(payload.config)).map((item) => JSON.parse(payload.config)[item])
+      );
+    } else {
+      const { payload } = await dispath(getConfiguage());
+      setConfig(payload.data);
+    }
     form.setFieldsValue(payload);
   };
   const onRemove = (item) => {
