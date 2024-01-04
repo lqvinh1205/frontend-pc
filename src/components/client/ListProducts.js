@@ -90,10 +90,16 @@ const ListProducts = () => {
                 </div>
               </div>
               <div className="flex justify-between px-2 pb-2">
-                <span className="text-[#12bd1b]">Có hàng</span>
-                <div className="cursor-pointer text-[#d42333]" onClick={() => addToCart(item)}>
-                  Giỏ hàng
-                </div>
+                {item.quantity_in_stock > 0 ? (
+                  <span className="text-[#12bd1b]">Có hàng</span>
+                ) : (
+                  <span className="text-[#d42333]">Hết hàng</span>
+                )}
+                {item.quantity_in_stock > 0 && (
+                  <div className="cursor-pointer text-[#d42333]" onClick={() => addToCart(item)}>
+                    Thêm vào giỏ
+                  </div>
+                )}
               </div>
             </div>
           ))
@@ -108,6 +114,7 @@ const ListProducts = () => {
           defaultCurrent={1}
           size="small"
           total={total}
+          pageSize={12}
           onChange={onChangePage}
           showTotal={showTotal}
         />

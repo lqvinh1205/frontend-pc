@@ -27,12 +27,7 @@ export const getBillById = createAsyncThunk('bill/getBillById', async (payload) 
 });
 
 export const editBill = createAsyncThunk('bill/editBill', async (payload) => {
-  const res = await api.patch(`${apiConstants.BILL}/${payload.id}`, payload.formData, {
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'multipart/form-data'
-    }
-  });
+  const res = await api.patch(`${apiConstants.BILL}/${payload.id}`, payload.data);
   return res.data;
 });
 

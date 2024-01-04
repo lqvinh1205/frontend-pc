@@ -40,7 +40,7 @@ export const exportToExcel = (data) => {
 
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'exported_data.xlsx';
+  a.download = 'Report.xlsx';
 
   document.body.appendChild(a);
   a.click();

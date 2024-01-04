@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Carousel, Modal } from 'antd';
-import { useParams } from 'react-router-dom';
+import { Carousel, Modal, Typography, message } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from './slice';
 import { getImage } from '../../../ultils';
@@ -12,6 +12,8 @@ const DetailProduct = () => {
   const dispatch = useDispatch();
   const [imageUrls, setImageUrls] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [disable, setDisable] = useState(false);
+  const navigate = useNavigate();
 
   const product = useSelector((state) => state.detailProduct.product);
 
@@ -20,6 +22,42 @@ const DetailProduct = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+  const addToCart = (product) => {
+    let carts = localStorage.getItem('carts') || [];
+    if (carts.length > 0) {
+      carts = JSON.parse(carts);
+      const productIdx = carts.findIndex((item) => item._id == product._id);
+      if (productIdx !== -1) {
+        carts[productIdx]['quantity']++;
+        localStorage.setItem('carts', JSON.stringify(carts));
+      } else {
+        const data = {
+          _id: product._id,
+          thumbnail: product.thumbnail,
+          price: product.price,
+          price_root: product.price_root,
+          quantity: 1,
+          name: product.name
+        };
+        localStorage.setItem('carts', JSON.stringify([...carts, data]));
+      }
+    } else {
+      const data = {
+        _id: product._id,
+        thumbnail: product.thumbnail,
+        price: product.price,
+        price_root: product.price_root,
+        quantity: 1,
+        name: product.name
+      };
+      localStorage.setItem('carts', JSON.stringify([data]));
+    }
+    message.success('Thêm sản phẩm vào giỏ hàng thành công');
+  };
+  const handlePaymentNow = (product) => {
+    addToCart(product);
+    navigate('/carts');
   };
   useEffect(() => {
     if (product.images) {
@@ -34,9 +72,14 @@ const DetailProduct = () => {
   useEffect(() => {
     dispatch(getProductById(id));
   }, []);
-
+  useEffect(() => {
+    setDisable(product?.quantity_in_stock <= 0);
+  }, [product]);
   return (
-    <div className="mx-auto my-2 flex w-full max-w-[1650px] flex-wrap gap-4">
+    <div className="mx-auto my-2 flex w-full max-w-[1650px] flex-wrap gap-x-4">
+      <div className="w-full">
+        <Typography.Title level={4}>{product.name}</Typography.Title>
+      </div>
       <div className="w-[40%]">{imageUrls && <CarouselDetailProduct imageUrls={imageUrls} />}</div>
       <div className="flex flex-1 flex-col">
         <div className="overflow-hidden rounded-[8px] bg-[#f0f0f0] p-3">
@@ -65,16 +108,30 @@ const DetailProduct = () => {
         <div className="mb-3 text-[14px] text-[#ee0000]">
           Giao hàng tận nơi miễn phí theo chính sách vận chuyển
         </div>
-        <div className="flex cursor-pointer flex-col items-center bg-gradient-to-b from-[#ff3838] to-[#a80002] py-4 text-white">
+        <button
+          className={`flex cursor-pointer flex-col items-center bg-gradient-to-b from-[#ff3838] to-[#a80002] py-4 text-white ${
+            disable && 'cursor-not-allowed bg-gradient-to-b from-[#747272] to-[#353434]'
+          }`}
+          disabled={disable}
+          onClick={() => !disable && handlePaymentNow(product)}>
           <div className="text-[15px] font-semibold">MUA NGAY</div>
           <div>Giao hàng tận nơi nhanh chóng</div>
-        </div>
+        </button>
         <div className="mt-3 grid grid-cols-2 gap-3">
-          <div className="flex cursor-pointer flex-col items-center bg-gradient-to-b from-[#3481bc] to-[#003cb5] py-4 text-white">
-            <div className="text-[15px] font-semibold">CHO VÀO GIỎ</div>
+          <div
+            className={`flex cursor-pointer flex-col items-center bg-gradient-to-b from-[#3481bc] to-[#003cb5] py-4 text-white ${
+              disable && 'cursor-not-allowed bg-gradient-to-b from-[#747272] to-[#353434]'
+            }`}
+            onClick={() => !disable && addToCart(product)}>
+            <div className="text-[15px] font-semibold" onClick={() => addToCart(product)}>
+              CHO VÀO GIỎ
+            </div>
             <div>Mua tiếp sản phẩm khác</div>
           </div>
-          <div className="flex cursor-pointer items-center justify-center bg-gradient-to-b from-[#3481bc] to-[#003cb5] py-4 text-[15px] font-semibold text-white">
+          <div
+            className={`flex cursor-pointer items-center justify-center bg-gradient-to-b from-[#3481bc] to-[#003cb5] py-4 text-[15px] font-semibold text-white ${
+              disable && 'cursor-not-allowed bg-gradient-to-b from-[#747272] to-[#353434]'
+            }`}>
             MUA TRẢ GÓP
           </div>
         </div>

@@ -1,13 +1,17 @@
-import { Button, Modal, Row, Table, Typography } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { EyeOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Row, Select, Table, Typography, message } from 'antd';
+import { useEffect, useState } from 'react';
+import { EyeOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteBill, getBill } from './slice';
+import { editBill, getBill } from './slice';
 import dayjs from 'dayjs';
 import ModalBillDetail from '../../../components/admin/ModalBillDetail';
 import { exportToExcel } from '../../../ultils';
 
+const statusBill = {
+  1: 'Đang chờ',
+  2: 'Hủy bỏ',
+  3: 'Thành công'
+};
 const ListBills = (props) => {
   const bills = useSelector((data) => data.bill.list);
   const total = useSelector((data) => data.bill.total);
@@ -25,17 +29,18 @@ const ListBills = (props) => {
     showModal();
     setId(id);
   };
-  const handleRemove = (id) => {
-    Modal.confirm({
-      title: 'Thông báo',
-      content: 'Bạn có chắc muốn xóa',
-      onOk: () =>
-        dispatch(deleteBill(id)).then((res) => {
-          if (!res.error) {
-            dispatch(getBill());
-          }
-        })
-    });
+  const handleChangeStatus = async (val, { _id: id }) => {
+    const { payload } = await dispatch(
+      editBill({
+        id,
+        data: {
+          status: Number(val)
+        }
+      })
+    );
+    if (payload?.message === 'success') {
+      await dispatch(getBill());
+    }
   };
   const columns = [
     {
@@ -54,13 +59,34 @@ const ListBills = (props) => {
       render: (text) => <a href="/">{text?.username}</a>
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'status'
-    },
-    {
       title: 'Ngày bán',
       dataIndex: 'sale_date',
       render: (date) => dayjs(date).format('DD/MM/YYYY')
+    },
+    {
+      title: 'Trạng thái',
+      width: '7%',
+      render: (data) => (
+        <Select
+          className="w-full"
+          defaultValue={Number(data.status)}
+          onChange={(val) => handleChangeStatus(val, data)}
+          options={[
+            {
+              value: 1,
+              label: 'Đang chờ'
+            },
+            {
+              value: 2,
+              label: 'Thành Công'
+            },
+            {
+              value: 3,
+              label: 'Hủy bỏ'
+            }
+          ]}
+        />
+      )
     },
     {
       title: 'Tổng tiền',
@@ -79,11 +105,6 @@ const ListBills = (props) => {
               className="bg-[#1677ff]"
               icon={<EyeOutlined />}></Button>
           </div>
-          <Button
-            type="primary"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleRemove(id)}></Button>
         </Row>
       )
     }
@@ -102,16 +123,27 @@ const ListBills = (props) => {
     });
 
     const data = [
-      ['Thời gian', 'Tên khách hàng', 'Người bán', 'Tên hàng', 'Số lượng', 'Giá bán'],
+      [
+        'Mã hóa đơn',
+        'Thời gian',
+        'Tên khách hàng',
+        'Người bán',
+        'Tên hàng',
+        'Số lượng',
+        'Giá bán',
+        'Trạng thái'
+      ],
       ...billDetail.flat().map((item) => {
         console.log(item);
         return [
+          item.bill.code,
           dayjs(item.bill.sale_date).format('DD/MM/YYYY'),
           item.bill.username,
           'Website',
           item.receipt.product_id[0]?.name,
           item.quantity,
-          item.price
+          item.price,
+          statusBill[item.bill.status]
         ];
       })
     ];

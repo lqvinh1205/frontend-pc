@@ -1,9 +1,9 @@
-import { Avatar, Button, Modal, Row, Table, Typography } from 'antd';
+import { Avatar, Button, Row, Select, Table, Typography } from 'antd';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteProduct, getProduct } from './slice';
+import { editProduct, getProduct } from './slice';
 import { getImage } from '../../../ultils';
 
 const ListProducts = (props) => {
@@ -11,17 +11,18 @@ const ListProducts = (props) => {
   const total = useSelector((data) => data.product.total);
   const dispatch = useDispatch();
 
-  const handleRemove = (id) => {
-    Modal.confirm({
-      title: 'Thông báo',
-      content: 'Bạn có chắc muốn xóa',
-      onOk: () =>
-        dispatch(deleteProduct(id)).then((res) => {
-          if (!res.error) {
-            dispatch(getProduct());
-          }
-        })
-    });
+  const handleChangeStatus = async (data, { _id: id }) => {
+    const { payload } = await dispatch(
+      editProduct({
+        id: id,
+        formData: {
+          is_deleted: data
+        }
+      })
+    );
+    if (payload?.message === 'success') {
+      await dispatch(getProduct());
+    }
   };
   const columns = [
     {
@@ -67,19 +68,43 @@ const ListProducts = (props) => {
       dataIndex: 'warranty_time'
     },
     {
+      title: 'Trạng thái',
+      width: '10%',
+      dataIndex: 'quantity_in_stock',
+      render: (data) => (
+        <div>
+          {data > 0 ? (
+            <span className="text-green-700">Còn hàng</span>
+          ) : (
+            <span className="text-red-700">Hết hàng</span>
+          )}
+        </div>
+      )
+    },
+    {
       title: 'Action',
-      dataIndex: '_id',
       align: 'right',
-      render: (id) => (
+      width: '7%',
+      render: (product) => (
         <Row className="flex justify-end gap-2">
-          <Link to={`/admin/products/${id}/edit`}>
+          <Select
+            defaultValue={product.is_deleted}
+            onChange={(val) => handleChangeStatus(val, product)}
+            options={[
+              {
+                value: true,
+                label: 'Đang bán'
+              },
+              {
+                value: false,
+                label: 'Dừng bán'
+              }
+            ]}
+            className="flex-1"
+          />
+          <Link to={`/admin/products/${product._id}/edit`}>
             <Button type="primary" className="bg-[#1677ff]" icon={<EditOutlined />}></Button>
           </Link>
-          <Button
-            type="primary"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleRemove(id)}></Button>
         </Row>
       )
     }
