@@ -145,7 +145,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Tên sản phẩm"
               name="name"
-              rules={[{ required: true, message: 'Please input your name product!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền tên sản phẩm !' }]}>
               <Input placeholder="Tên sản phẩm" />
             </Form.Item>
           </Col>
@@ -153,7 +153,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Mã sản phẩm"
               name="code"
-              rules={[{ required: true, message: 'Please input your code!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền mã code !' }]}>
               <Input placeholder="code" />
             </Form.Item>
           </Col>
@@ -163,7 +163,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Giá"
               name="price_root"
-              rules={[{ required: true, message: 'Please input your price!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền giá gốc !' }]}>
               <Input placeholder="price_root" suffix="VND" />
             </Form.Item>
           </Col>
@@ -171,7 +171,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Giảm giá"
               name="discount"
-              rules={[{ required: true, message: 'Please input your discount!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền giảm giá !' }]}>
               <Input placeholder="Discount" suffix="%" />
             </Form.Item>
           </Col>
@@ -179,7 +179,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Giá cuối"
               name="price"
-              rules={[{ required: true, message: 'Please input your price!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền giá cuối !' }]}>
               <Input placeholder="price" suffix="VND" disabled />
             </Form.Item>
           </Col>
@@ -189,7 +189,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Nhà bảo hành"
               name="warranty_house"
-              rules={[{ required: true, message: 'Please input your warranty house!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền nhà bảo hành !' }]}>
               <Input placeholder="Nhà bảo hành" />
             </Form.Item>
           </Col>
@@ -197,7 +197,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Thời gian bảo hành"
               name="warranty_time"
-              rules={[{ required: true, message: 'Please input your warranty time!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền thời gian bảo hành !' }]}>
               <Input placeholder="Thời gian bảo hành" />
             </Form.Item>
           </Col>
@@ -205,7 +205,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Đơn vị bảo hành"
               name="warranty_unit"
-              rules={[{ required: true, message: 'Please input your warranty unit!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền đơn vị bảo hành !' }]}>
               <Select
                 options={[
                   { value: 'Tháng', label: 'Tháng' },
@@ -220,7 +220,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Nhà cung cấp"
               name="supplier"
-              rules={[{ required: true, message: 'Please input your supplier!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền nhà cung cấp !' }]}>
               <Input placeholder="Nhà cung cấp" />
             </Form.Item>
           </Col>
@@ -228,7 +228,7 @@ const AddProduct = (props) => {
             <Form.Item
               label="Thương hiệu"
               name="brand_id"
-              rules={[{ required: true, message: 'Please input your brand!' }]}>
+              rules={[{ required: true, message: 'Xin hãy điền thương hiệu !' }]}>
               <Select
                 options={brands.map((item) => ({
                   value: item._id,
@@ -247,7 +247,7 @@ const AddProduct = (props) => {
           valuePropName="fileList"
           getValueFromEvent={normFile}
           extra=""
-          rules={[{ required: true, message: 'Please input your file!' }]}>
+          rules={[{ required: true, message: 'Xin hãy chọn file !' }]}>
           <Upload
             name="thumbnail"
             customRequest={({ file, onError }) => {
@@ -269,7 +269,7 @@ const AddProduct = (props) => {
             valuePropName="fileList"
             getValueFromEvent={normFile}
             extra=""
-            rules={[{ required: true, message: 'Please input your file!' }]}>
+            rules={[{ required: true, message: 'Xin hãy chọn file !' }]}>
             <Upload
               name="images"
               customRequest={customRequest}
@@ -294,7 +294,7 @@ const AddProduct = (props) => {
                       <Form.Item
                         label="Tên cấu hình"
                         name={[field.name, 'name']}
-                        rules={[{ required: true, message: 'Please input your name!' }]}>
+                        rules={[{ required: true, message: 'Xin hãy điền tên !' }]}>
                         <Input disabled />
                       </Form.Item>
                       {/* Nest Form.List */}

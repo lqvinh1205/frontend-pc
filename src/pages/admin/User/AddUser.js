@@ -44,14 +44,14 @@ const AddUser = (props) => {
         <Form.Item
           label="Tên người dùng"
           name="username"
-          rules={[{ required: true, message: 'Please input your username!' }]}>
+          rules={[{ required: true, message: 'Xin hãy điền tên !' }]}>
           <Input placeholder="Name" />
         </Form.Item>
         <Form.Item
           label="Email"
           name="email"
           rules={[
-            { required: true, message: 'Please input your email!' },
+            { required: true, message: 'Xin hãy điền email !' },
             {
               type: 'email',
               message: 'The input is not valid E-mail!'
@@ -62,25 +62,25 @@ const AddUser = (props) => {
         <Form.Item
           label="Số điện thoại"
           name="phone_number"
-          rules={[{ required: true, message: 'Please input your phone!' }]}>
+          rules={[{ required: true, message: 'Xin hãy điền  số điện thoại !' }]}>
           <Input placeholder="0982882122" />
         </Form.Item>
         <Form.Item
           label="Ngày sinh"
           name="date_of_birth"
-          rules={[{ required: true, message: 'Please input your date of birth!' }]}>
+          rules={[{ required: true, message: 'Xin hãy điền  ngày sinh!' }]}>
           <DatePicker format={'DD/MM/YYYY'} onChange={onChangeDatePicker} />
         </Form.Item>
         <Form.Item
           label="Địa chỉ"
           name="address"
-          rules={[{ required: true, message: 'Please input your address!' }]}>
+          rules={[{ required: true, message: 'Xin hãy điền  địa chỉ !' }]}>
           <Input placeholder="Ha noi" />
         </Form.Item>
         <Form.Item
           label="Vai trò"
           name="role"
-          rules={[{ required: true, message: 'Please input your role!' }]}>
+          rules={[{ required: true, message: 'Xin hãy điền  vai trò !' }]}>
           <Select>
             <Option value={1}>Người quản trị</Option>
             <Option value={2}>Nhân viên</Option>

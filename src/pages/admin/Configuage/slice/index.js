@@ -3,12 +3,12 @@ import api from '../../../../api';
 import apiConstants from '../../../../api/apiConstants';
 import { message } from 'antd';
 
-export const getConfiguage = createAsyncThunk('brand/getConfiguage', async () => {
+export const getConfiguage = createAsyncThunk('config/getConfiguage', async () => {
   const res = await api.get(apiConstants.CONFIGUAGE);
   return res.data;
 });
 
-export const editConfiguage = createAsyncThunk('brand/editConfiguage', async (payload) => {
+export const editConfiguage = createAsyncThunk('config/editConfiguage', async (payload) => {
   try {
     const res = await api.post(apiConstants.CONFIGUAGE, payload);
     return res.data;
@@ -21,14 +21,10 @@ const initialState = {
   list: []
 };
 
-export const brandSlice = createSlice({
-  name: 'brand',
+export const configSlice = createSlice({
+  name: 'config',
   initialState,
-  reducers: {
-    SET_CONFIGUAGES: (state, payload) => {
-      state.list = payload;
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getConfiguage.fulfilled, (state, action) => {
@@ -40,6 +36,4 @@ export const brandSlice = createSlice({
   }
 });
 
-export const { SET_CONFIGUAGES } = brandSlice.actions;
-
-export default brandSlice.reducer;
+export default configSlice.reducer;

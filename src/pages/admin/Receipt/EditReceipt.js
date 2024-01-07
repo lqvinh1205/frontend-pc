@@ -75,7 +75,7 @@ const EditBrand = (props) => {
         <Form.Item
           label="Name category"
           name="name"
-          rules={[{ required: true, message: 'Please input your username!' }]}>
+          rules={[{ required: true, message: 'Xin hãy điền tên !' }]}>
           <Input placeholder="Name" />
         </Form.Item>
 

@@ -17,10 +17,7 @@ const AdminLayout = () => {
       <Layout className="site-layout">
         <HeaderAdmin />
         <Content style={{ margin: '0 16px' }} className="flex flex-col">
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumb style={{ margin: '16px 0' }}></Breadcrumb>
           <div className="site-layout-background flex-1" style={{ padding: 24, minHeight: 360 }}>
             <Outlet />
           </div>

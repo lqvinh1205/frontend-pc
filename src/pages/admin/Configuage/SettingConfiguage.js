@@ -62,7 +62,7 @@ const SettingConfiguage = (props) => {
                   <Form.Item
                     label="Tên cấu hình"
                     name={[field.name, 'name']}
-                    rules={[{ required: true, message: 'Please input your name!' }]}>
+                    rules={[{ required: true, message: 'Xin hãy điền tên !' }]}>
                     <Input />
                   </Form.Item>
 
@@ -77,7 +77,7 @@ const SettingConfiguage = (props) => {
                                 className="flex-1 pl-4"
                                 label="Tiêu đề"
                                 name={[subField.name, 'name']}
-                                rules={[{ required: true, message: 'Please input your name!' }]}>
+                                rules={[{ required: true, message: 'Xin hãy điền tên !' }]}>
                                 <Input placeholder="" />
                               </Form.Item>
                               <CloseOutlined

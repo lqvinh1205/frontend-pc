@@ -4,11 +4,12 @@ import {
   DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
-  TeamOutlined,
-  UserOutlined
+  UserOutlined,
+  DropboxOutlined,
+  SettingOutlined,
+  ShoppingOutlined
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import SubMenu from 'antd/lib/menu/SubMenu';
 
 const SideBar = () => {
   return (
@@ -33,20 +34,20 @@ const SideBar = () => {
         <Menu.Item key="3" icon={<UserOutlined />}>
           <Link to="/admin/users">Người dùng</Link>
         </Menu.Item>
-        <Menu.Item key="9" icon={<FileOutlined />}>
+        <Menu.Item key="9" icon={<DropboxOutlined />}>
           <Link to="/admin/products">Sản phẩm</Link>
         </Menu.Item>
-        <Menu.Item key="10" icon={<FileOutlined />}>
-          <Link to="/admin/configuage">Cài đặt cấu hình</Link>
+        <Menu.Item key="6" icon={<ShoppingOutlined />}>
+          <Link to="/admin/bills">Hóa đơn</Link>
         </Menu.Item>
         <Menu.Item key="11" icon={<FileOutlined />}>
           <Link to="/admin/receipt">Nhập kho</Link>
         </Menu.Item>
-        <Menu.Item key="6" icon={<FileOutlined />}>
-          <Link to="/admin/bills">Hóa đơn</Link>
-        </Menu.Item>
         <Menu.Item key="7" icon={<FileOutlined />}>
           <Link to="/admin/inventory">Báo cáo tồn kho</Link>
+        </Menu.Item>
+        <Menu.Item key="10" icon={<SettingOutlined />}>
+          <Link to="/admin/configuage">Cài đặt cấu hình</Link>
         </Menu.Item>
       </Menu>
     </>

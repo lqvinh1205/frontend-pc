@@ -92,11 +92,11 @@ const ListProducts = (props) => {
             onChange={(val) => handleChangeStatus(val, product)}
             options={[
               {
-                value: true,
+                value: false,
                 label: 'Đang bán'
               },
               {
-                value: false,
+                value: true,
                 label: 'Dừng bán'
               }
             ]}

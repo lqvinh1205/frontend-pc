@@ -190,7 +190,7 @@ const Cart = () => {
         <div className="border border-[#de0b00]">
           <div className="bg-[#de0b00] p-3 text-[20px] text-white">Thông tin thanh toán</div>
           <div className="p-3">
-            <p>Để tiếp tục đặt hàng, quý khách xin vui lòng nhập thông tin bên dưới.</p>
+            <p>Để tiếp tục đặt hàng, quý khách xin vui lòng điền thông tin bên dưới.</p>
             <p className="mt-3">
               Bằng cách đặt hàng, bạn đồng ý với Điều khoản giao dịch của Phúc Anh.
             </p>
@@ -208,7 +208,7 @@ const Cart = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your username!'
+                      message: 'Xin hãy điền tên !'
                     }
                   ]}>
                   <Input />
@@ -219,7 +219,7 @@ const Cart = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your phone number!'
+                      message: 'Xin hãy điền số điện thoại!'
                     }
                   ]}>
                   <Input />
@@ -234,7 +234,7 @@ const Cart = () => {
                   rules={[
                     {
                       type: 'email',
-                      message: 'Invalid type email!'
+                      message: 'Email không hợp lệ!'
                     }
                   ]}>
                   <Input />
@@ -245,7 +245,7 @@ const Cart = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your address!'
+                      message: 'Xin hãy điền  địa chỉ !'
                     }
                   ]}>
                   <Input />

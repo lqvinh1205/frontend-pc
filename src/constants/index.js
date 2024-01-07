@@ -61,3 +61,4 @@ export const LIST_SHOWROOM = [
     map: 'https://goo.gl/maps/YHHwWskmhbubKUMm7'
   }
 ];
+export const DATE_FORMAT = 'DD-MM-YYYY';

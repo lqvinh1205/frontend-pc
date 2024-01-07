@@ -33,7 +33,7 @@ const HeaderAdmin = () => {
       className="bg-white"
       style={{ padding: '0 16px', fontWeight: 'bold', fontSize: 25 }}>
       <div className="flex justify-between">
-        <div>Manager</div>
+        <div>Quản lý</div>
         <div className="flex items-center gap-7 pr-4">
           <Badge count={100}>
             <Avatar shape="square" size="small" />

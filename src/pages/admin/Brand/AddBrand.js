@@ -60,7 +60,7 @@ const AddBrand = (props) => {
         <Form.Item
           label="Name category"
           name="name"
-          rules={[{ required: true, message: 'Please input your username!' }]}>
+          rules={[{ required: true, message: 'Xin hãy điền tên !' }]}>
           <Input placeholder="Name" />
         </Form.Item>
         <Form.Item
@@ -69,7 +69,7 @@ const AddBrand = (props) => {
           valuePropName="fileList"
           getValueFromEvent={normFile}
           extra=""
-          rules={[{ required: true, message: 'Please input your file!' }]}>
+          rules={[{ required: true, message: 'Xin hãy chọn file !' }]}>
           <Upload name="logo" customRequest={customRequest} maxCount={1} showUploadList={false}>
             <Button icon={<UploadOutlined />}>Click to upload</Button>
             <span className="pl-2">{fileList?.name}</span>
