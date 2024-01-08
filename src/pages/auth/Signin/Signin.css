@@ -1,0 +1,62 @@
+.logo-login {
+  filter: brightness(100%);
+}
+.text-login {
+  text-align: center;
+  color: var(--color-white) !important;
+}
+.text-logo-form {
+  color: var(--color-white);
+  font-size: 20px;
+}
+.form-signin {
+  background: var(--color-dark-transparent);
+  border-radius: 5px;
+  box-shadow: 0 0 10px 0px var(--color-dark-transparent-2);
+}
+
+.signin-main {
+  padding: 5% 30%;
+  background-color: var(--color-black);
+}
+.form-signin .ant-form-item-label > label,
+.form-signin .ant-checkbox + span,
+.form-signin .anticon svg {
+  color: var(--color-white);
+}
+.ant-input,
+.ant-input-number,
+.ant-input-affix-wrapper,
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
+.ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input:hover,
+.ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(
+    .ant-input-affix-wrapper-borderless
+  ).ant-input-affix-wrapper,
+.ant-input-number-status-error:not(.ant-input-number-disabled):not(
+    .ant-input-number-borderless
+  ).ant-input-number,
+.ant-form-item-control-input-content .ant-input,
+.ant-form-item-control-input-content
+  .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(
+    .ant-input-affix-wrapper-borderless
+  ).ant-input-affix-wrapper:hover {
+  background: none;
+  color: var(--color-white);
+}
+
+.have-account {
+  color: var(--color-white-light);
+}
+.ant-input-number-handler-wrap .ant-input-number-handler .ant-input-number-handler-down-inner svg,
+.ant-input-number-handler-wrap .ant-input-number-handler .ant-input-number-handler-up-inner svg {
+  color: black;
+}
+/* Change the white to any color */
+.form-signin input:-webkit-autofill,
+.form-signin input:-webkit-autofill:hover,
+.form-signin input:-webkit-autofill:focus,
+.form-signin input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: rgb(0, 0, 0) !important;
+}

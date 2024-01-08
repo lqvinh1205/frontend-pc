@@ -9,6 +9,7 @@ import configuageReduce from '../pages/admin/Configuage/slice';
 import receiptReduce from '../pages/admin/Receipt/slice';
 import inventoryReduce from '../pages/admin/InventoryReport/slice';
 import dashboardReduce from '../pages/admin/Dashboard/slice';
+import authReduce from '../pages/auth/slice';
 import appSlice from './app.slice';
 
 export const store = configureStore({
@@ -23,7 +24,8 @@ export const store = configureStore({
     bill: billReduce,
     receipt: receiptReduce,
     inventory: inventoryReduce,
-    dashboard: dashboardReduce
+    dashboard: dashboardReduce,
+    auth: authReduce
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

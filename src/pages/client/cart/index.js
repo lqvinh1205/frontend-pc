@@ -19,6 +19,10 @@ const Cart = () => {
     if (carts.length > 0) {
       const dataReq = {
         ...values,
+        sale_staff:
+          JSON.parse(localStorage.getItem('user'))?.user.role == 2
+            ? JSON.parse(localStorage.getItem('user'))?.user?._id
+            : null,
         carts: JSON.parse(localStorage.getItem('carts'))
       };
       const { payload } = await dispatch(postCartProducts(dataReq));
@@ -200,6 +204,7 @@ const Cart = () => {
                 name="basic"
                 layout="vertical"
                 onFinish={onFinish}
+                initialValues={JSON.parse(localStorage.getItem('user'))?.user}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off">
                 <Form.Item

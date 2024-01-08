@@ -68,7 +68,7 @@ const HeaderMiddle = () => {
           <span className="text-[14px]">Gọi mua hàng: </span>
           <span className="text-[26px]">1900 2164</span>
         </div>
-        <div className="ml-5">
+        <div className="ml-5 flex gap-1">
           <button
             onClick={() => navigate('/carts')}
             className="h-[34px] rounded-[4px] border bg-[#dd0000] px-[5px] text-[14px] text-white">

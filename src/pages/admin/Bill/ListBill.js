@@ -51,12 +51,12 @@ const ListBills = (props) => {
     {
       title: 'Người mua',
       dataIndex: 'username',
-      render: (text) => <a href="/">{text}</a>
+      render: (text) => <span>{text}</span>
     },
     {
       title: 'Người bán',
       dataIndex: 'sale_staff',
-      render: (text) => <a href="/">{text?.username}</a>
+      render: (staff) => <span>{staff[0]?.username}</span>
     },
     {
       title: 'Ngày bán',

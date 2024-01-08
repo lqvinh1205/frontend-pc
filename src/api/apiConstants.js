@@ -7,7 +7,8 @@ const apiConstants = {
   BILL: '/v1/bills',
   RECEIPT: '/v1/receipts',
   INVENTORY: '/v1/report/inventory',
-  DASHBOARD: '/v1/report/dashboard'
+  DASHBOARD: '/v1/report/dashboard',
+  AUTH: '/v1/auth'
 };
 
 export default apiConstants;

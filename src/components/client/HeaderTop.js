@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HeaderTop = () => {
   return (
@@ -10,6 +11,17 @@ const HeaderTop = () => {
         <li>Xây dựng cấu hình</li>
         <li>In Hóa đơn điện tử</li>
       </ul>
+      <div className="text-[13px] leading-[34px] text-white">
+        <ul className="flex flex-wrap gap-2">
+          <Link to="/signup">
+            <li>Đăng ký</li>
+          </Link>
+          |
+          <Link to="/signin">
+            <li>Đăng nhập</li>
+          </Link>
+        </ul>
+      </div>
     </div>
   );
 };

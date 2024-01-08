@@ -19,6 +19,9 @@ import ListBills from '../pages/admin/Bill/ListBill';
 import ListReceipt from '../pages/admin/Receipt/ListReceipt';
 import AddReceipt from '../pages/admin/Receipt/AddReceipt';
 import InventoryReport from '../pages/admin/InventoryReport/ListInventory';
+import PrivateRouter from '../pages/admin/PrivateRouter/PrivateRouter';
+import Signin from '../pages/auth/Signin/Signin';
+import Signup from '../pages/auth/Signup/Signup';
 
 // import { protectedRoutes } from "./protected";
 // import { publicRoutes } from "./public";
@@ -32,8 +35,16 @@ export const AppRoutes = () => {
         <Route index element={<HomePage />} />
         <Route path="products/:id" element={<DetailProduct />} />
         <Route path="carts" element={<Cart />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
       </Route>
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route
+        path="/admin"
+        element={
+          <PrivateRouter>
+            <AdminLayout />
+          </PrivateRouter>
+        }>
         <Route index element={<Dashboard />} />
         <Route path="brand">
           <Route index element={<ListBrand />} />

@@ -1,21 +1,16 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { getLs } from "../../../shared/ultis/localstogare";
+import { Navigate } from 'react-router-dom';
 
-type PrivateRouterProps = {
-  children: JSX.Element;
-};
-
-const PrivateRouter = (props: PrivateRouterProps) => {
-  // if(getLs('user')) {
-  //     const isUser = getLs('user').user.role
-  //     if(!isUser){
-  //         return <Navigate to='/'/>
-  //     }
-  // }else {
-  //     return <Navigate to='/signin'/>
-  // }
-  return props.children;
+const PrivateRouter = (props) => {
+  const user = localStorage.getItem('user');
+  if (user) {
+    const role = JSON.parse(user).user?.role;
+    if (role == 1 || role == 2) {
+      return props.children;
+    }
+  } else {
+    return <Navigate to="/signin" />;
+  }
+  return <Navigate to="/" />;
 };
 
 export default PrivateRouter;
