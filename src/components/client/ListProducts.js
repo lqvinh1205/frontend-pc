@@ -73,7 +73,7 @@ const ListProducts = () => {
           products.map((item, idx) => (
             <div
               key={idx}
-              className="flex min-h-[370px] w-[calc(100%/6)] flex-col border-b-[1px] border-r-[1px] text-[13px]">
+              className="flex min-h-[370px] lg:w-[calc(100%/6)] sm:w-[calc(100%/4)] w-[calc(100%/2)] flex-col border-b-[1px] border-r-[1px] text-[13px]">
               <div className="flex max-h-[250px] items-center justify-center overflow-hidden">
                 <img src={getImage(item?.thumbnail?.path)} alt="" className="object-contain" />
               </div>

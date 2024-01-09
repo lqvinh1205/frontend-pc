@@ -17,7 +17,7 @@ const CategoryBrand = () => {
     dispatch(getBrand());
   }, []);
   return (
-    <div className="min-h-[700px] w-[300px] border border-[#de0b00]">
+    <div className="min-h-[700px] sm:w-[200px] lg:w-[300px] border border-[#de0b00]">
       <ul className="flex flex-col text-[14px] text-[#0000ff]">
         <div
           onClick={() => handleSearchByBrand()}
