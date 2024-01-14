@@ -80,7 +80,7 @@ const DetailProduct = () => {
       <div className="w-full">
         <h4 className="text-[20px] sm:text-[25px]">{product.name}</h4>
       </div>
-      <div className="w-full sm:w-[40%]">
+      <div className="w-full md:w-[40%]">
         {imageUrls && <CarouselDetailProduct imageUrls={imageUrls} />}
       </div>
       <div className="flex flex-1 flex-col">
