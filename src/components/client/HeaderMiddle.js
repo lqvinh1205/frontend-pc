@@ -36,8 +36,8 @@ const HeaderMiddle = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="flex h-[90px] w-full max-w-[1650px] flex-wrap items-center">
-        <div className="">
+      <div className="flex h-[90px] w-full max-w-[1650px] flex-wrap items-center px-2">
+        <div className="order-1 flex flex-1 justify-between">
           <a href="/">
             <img
               className="h-auto max-w-full border-none object-cover"
@@ -46,8 +46,8 @@ const HeaderMiddle = () => {
             />
           </a>
         </div>
-        <div className="flex-1 px-8">
-          <form className="flex flex-row overflow-hidden rounded-[3px] border border-[#de0b00]">
+        <div className="order-3 flex w-full md:order-2 md:flex-1 md:px-8">
+          <form className="flex w-full flex-row overflow-hidden rounded-[3px] border border-[#de0b00]">
             <input
               type="text"
               className="h-[32px] w-full pl-2 text-[13px] outline-none"
@@ -58,22 +58,24 @@ const HeaderMiddle = () => {
             />
             <button
               type="submit"
-              className="h-auto bg-[#de0b00] px-2 text-[13px] text-white"
+              className="h-auto bg-[#de0b00] px-2 text-[11px] text-white sm:text-[13px]"
               onClick={handleSearch}>
               Search
             </button>
           </form>
         </div>
-        <div className="text-[#ee0000]">
-          <span className="text-[14px]">Gọi mua hàng: </span>
-          <span className="text-[26px]">1900 2164</span>
-        </div>
-        <div className="ml-5 flex gap-1">
-          <button
-            onClick={() => navigate('/carts')}
-            className="h-[34px] rounded-[4px] border bg-[#dd0000] px-[5px] text-[14px] text-white">
-            Giỏ hàng {count > 0 && <Badge count={count} color="#faad14" />}
-          </button>
+        <div className="order-2 flex flex-wrap md:order-3">
+          <div className="text-[#ee0000]">
+            <span className="text-[12px] sm:text-[14px]">Gọi mua hàng: </span>
+            <span className="text-[20px] sm:text-[26px]">1900 2164</span>
+          </div>
+          <div className="ml-1 flex gap-1 sm:ml-5">
+            <button
+              onClick={() => navigate('/carts')}
+              className="h-[34px] rounded-[4px] border bg-[#dd0000] px-[5px] text-[12px] text-white sm:text-[14px]">
+              Giỏ hàng {count > 0 && <Badge count={count} color="#faad14" />}
+            </button>
+          </div>
         </div>
       </div>
     </div>

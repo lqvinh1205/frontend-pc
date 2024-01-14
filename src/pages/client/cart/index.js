@@ -171,31 +171,35 @@ const Cart = () => {
     }
   }, []);
   return (
-    <div className="mx-auto my-2 flex w-full max-w-[1650px] flex-col gap-4">
+    <div className="mx-auto my-2 flex w-full max-w-[1650px] flex-col gap-4 px-2">
       <div className="mt-2 flex items-center gap-3">
-        <h1 className="text-[18px]">Giỏ hàng của tôi</h1>{' '}
+        <h1 className="text-[16px] sm:text-[18px]">Giỏ hàng của tôi</h1>{' '}
         <button
           onClick={() => navigate('/')}
-          className="rounded-[4px] bg-[#24aa98] px-[10px] py-[5px] text-white">
+          className="rounded-[4px] bg-[#24aa98] px-[10px] py-[5px] text-[13px] text-white sm:text-[14px]">
           Tiếp tục mua hàng
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-4">
-        <div className="col-span-2">
+      <div className="grid sm:gap-4 lg:grid-cols-3">
+        <div className="overflow-x-auto lg:col-span-2">
           <Table
+            size="small"
             columns={columns}
             dataSource={products}
             bordered
             pagination={{
               total: 10
             }}
+            className="min-w-full whitespace-nowrap lg:w-full xl:w-full"
           />
         </div>
         <div className="border border-[#de0b00]">
-          <div className="bg-[#de0b00] p-3 text-[20px] text-white">Thông tin thanh toán</div>
-          <div className="p-3">
+          <div className="bg-[#de0b00] p-3 text-[18px] text-white sm:text-[20px]">
+            Thông tin thanh toán
+          </div>
+          <div className="p-3 text-[13px] sm:text-[14px]">
             <p>Để tiếp tục đặt hàng, quý khách xin vui lòng điền thông tin bên dưới.</p>
-            <p className="mt-3">
+            <p className="mt-3 text-[13px] sm:text-[14px]">
               Bằng cách đặt hàng, bạn đồng ý với Điều khoản giao dịch của Phúc Anh.
             </p>
             <div className="mt-2">
@@ -264,10 +268,10 @@ const Cart = () => {
             </div>
           </div>
           <div
-            className="flex cursor-pointer flex-col items-center bg-[#de0b00] p-3 text-[20px] text-white"
+            className="flex cursor-pointer flex-col items-center bg-[#de0b00] p-3 text-[18px] text-white sm:text-[20px]"
             onClick={() => form.submit()}>
             <div>ĐẶT HÀNG</div>
-            <div className="text-[14px]">Tư vấn viên sẽ gọi điện thoại xác nhận</div>
+            <div className="text-[13px] sm:text-[14px]">Tư vấn viên sẽ gọi điện thoại xác nhận</div>
           </div>
         </div>
       </div>

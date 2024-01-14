@@ -6,7 +6,7 @@ const Footer = () => {
     <div className="flex justify-center bg-[#4471c2]">
       <div className="flex max-w-[1650px] flex-wrap py-3">
         {LIST_SHOWROOM.map((item, idx) => (
-          <div className="lg:w-[25%] sm:w-[50%] w-full px-3 pb-5 text-white" key={idx}>
+          <div className="w-full px-3 pb-5 text-white sm:w-[50%] lg:w-[25%]" key={idx}>
             <div className="mb-[10px] font-medium">{item.title}</div>
             <div className="text-[13px] leading-[20px]">
               <div>Địa chỉ: {item.address}</div>

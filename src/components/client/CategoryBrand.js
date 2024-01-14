@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getBrand } from '../../pages/admin/Brand/slice';
 import { getProduct } from '../../pages/client/homepage/slice';
 
-const CategoryBrand = () => {
+const CategoryBrand = ({ show }) => {
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brand.list);
   const handleSearchByBrand = async (id) => {
@@ -17,7 +17,10 @@ const CategoryBrand = () => {
     dispatch(getBrand());
   }, []);
   return (
-    <div className="min-h-[700px] sm:w-[200px] lg:w-[300px] border border-[#de0b00]">
+    <div
+      className={`w-full border border-[#de0b00] bg-white md:block md:min-h-[700px] ${
+        !show ? 'hidden' : ''
+      }`}>
       <ul className="flex flex-col text-[14px] text-[#0000ff]">
         <div
           onClick={() => handleSearchByBrand()}

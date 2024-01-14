@@ -1,8 +1,6 @@
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
+import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
@@ -10,12 +8,10 @@ import 'swiper/css/thumbs';
 
 import './style.css';
 
-// import required modules
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
 
 export default function CarouselDetailProduct({ imageUrls }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
-  console.log(imageUrls);
   return (
     <>
       <Swiper

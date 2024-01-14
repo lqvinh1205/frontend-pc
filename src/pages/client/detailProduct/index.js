@@ -76,36 +76,44 @@ const DetailProduct = () => {
     setDisable(product?.quantity_in_stock <= 0);
   }, [product]);
   return (
-    <div className="mx-auto my-2 flex w-full max-w-[1650px] flex-wrap gap-x-4">
+    <div className="mx-auto my-2 flex w-full max-w-[1650px] flex-wrap gap-x-4 px-2">
       <div className="w-full">
-        <Typography.Title level={4}>{product.name}</Typography.Title>
+        <h4 className="text-[20px] sm:text-[25px]">{product.name}</h4>
       </div>
-      <div className="w-[40%]">{imageUrls && <CarouselDetailProduct imageUrls={imageUrls} />}</div>
+      <div className="w-full sm:w-[40%]">
+        {imageUrls && <CarouselDetailProduct imageUrls={imageUrls} />}
+      </div>
       <div className="flex flex-1 flex-col">
         <div className="overflow-hidden rounded-[8px] bg-[#f0f0f0] p-3">
           <div className="flex items-center">
-            <div className="w-[40%] text-[14px]">Giá niêm yết:</div>
-            <div className="text-[20px] font-medium leading-[42px]">{product.price_root} VND</div>
+            <div className="w-[40%] text-[13px] sm:text-[14px]">Giá niêm yết:</div>
+            <div className="text-[18px] font-medium leading-[42px] sm:text-[20px]">
+              {product.price_root} VND
+            </div>
           </div>
           <div className="flex items-center">
-            <div className="w-[40%] text-[14px] font-medium">Giá ưu đãi tháng 12:</div>
+            <div className="w-[40%] text-[13px] font-medium sm:text-[14px]">
+              Giá ưu đãi tháng 12:
+            </div>
             <div className="text-[25px] font-semibold leading-[38px] text-[#ee0000]">
               {product.price} VND
-              <span className="text-[12px] font-normal text-[#888]">[Giá đã có VAT]</span>
+              <span className="text-[10px] font-normal text-[#888] sm:text-[12px]">
+                [Giá đã có VAT]
+              </span>
             </div>
           </div>
           <div className="flex items-center">
             <div className="w-[40%] text-[14px] font-medium"></div>
-            <div className="text-[13px] leading-[38px] text-blue-800">
+            <div className="text-[11px] leading-[38px] text-blue-800 sm:text-[13px]">
               Học sinh, sinh viên giảm thêm 168.000 ₫
             </div>
           </div>
         </div>
-        <div className="my-3 text-[14px]">
+        <div className="my-3 text-[13px] sm:text-[14px]">
           <strong>Bảo hành:</strong> 12 Tháng. Bảo hành tại hãng. Bảo hành tại nơi sử dụng. Đổi mới
           30 ngày.
         </div>
-        <div className="mb-3 text-[14px] text-[#ee0000]">
+        <div className="mb-3  text-[13px] text-[#ee0000] sm:text-[14px]">
           Giao hàng tận nơi miễn phí theo chính sách vận chuyển
         </div>
         <button
@@ -114,8 +122,8 @@ const DetailProduct = () => {
           }`}
           disabled={disable}
           onClick={() => !disable && handlePaymentNow(product)}>
-          <div className="text-[15px] font-semibold">MUA NGAY</div>
-          <div>Giao hàng tận nơi nhanh chóng</div>
+          <div className="text-[14px] font-semibold sm:text-[15px]">MUA NGAY</div>
+          <div className="text-[13px] sm:text-[14px]">Giao hàng tận nơi nhanh chóng</div>
         </button>
         <div className="mt-3 grid grid-cols-2 gap-3">
           <div
@@ -123,23 +131,25 @@ const DetailProduct = () => {
               disable && 'cursor-not-allowed bg-gradient-to-b from-[#747272] to-[#353434]'
             }`}
             onClick={() => !disable && addToCart(product)}>
-            <div className="text-[15px] font-semibold" onClick={() => addToCart(product)}>
+            <div
+              className="text-[14px] font-semibold sm:text-[15px]"
+              onClick={() => addToCart(product)}>
               CHO VÀO GIỎ
             </div>
-            <div>Mua tiếp sản phẩm khác</div>
+            <div className="text-[13px] sm:text-[14px]">Mua tiếp sản phẩm khác</div>
           </div>
           <div
-            className={`flex cursor-pointer items-center justify-center bg-gradient-to-b from-[#3481bc] to-[#003cb5] py-4 text-[15px] font-semibold text-white ${
+            className={`flex cursor-pointer items-center justify-center bg-gradient-to-b from-[#3481bc] to-[#003cb5] py-4 text-[14px] font-semibold text-white sm:text-[15px] ${
               disable && 'cursor-not-allowed bg-gradient-to-b from-[#747272] to-[#353434]'
             }`}>
             MUA TRẢ GÓP
           </div>
         </div>
         <div className="mt-3 overflow-hidden rounded-[8px]">
-          <div className="bg-[#d1d5db] p-3 font-medium text-[#e80c00]">
+          <div className="bg-[#d1d5db] p-3 text-[13px] font-medium text-[#e80c00] sm:text-[14px]">
             ƯU ĐÃI VÀ QUÀ TẶNG KHUYẾN MÃI:
           </div>
-          <div className="bg-[#f0f0f0] p-3 leading-[30px]">
+          <div className="bg-[#f0f0f0] p-3 text-[13px] leading-[30px] sm:text-[14px]">
             Áp dụng từ 01/12/2023 đến 31/12/2023 <br />
             ✦ Chuột không dây
             <br />
@@ -170,7 +180,7 @@ const DetailProduct = () => {
         </div>
         <div
           onClick={showModal}
-          className="mt-3 flex w-[30%] cursor-pointer items-center justify-center rounded-[8px] border border-blue-400 p-3 text-[14px] text-blue-400">
+          className="mt-3 flex w-[40%] cursor-pointer items-center justify-center rounded-[8px] border border-blue-400 p-3 text-[14px] text-blue-400 sm:w-[30%]">
           Xem chi tiết cấu hình <CaretRightOutlined />
         </div>
         {product.config && (
