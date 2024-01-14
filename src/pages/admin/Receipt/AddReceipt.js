@@ -270,7 +270,7 @@ const AddReceipt = () => {
       key: '1',
       label: 'Người nhập',
       span: 2,
-      children: 'le vinh'
+      children: JSON.parse(localStorage.getItem('user'))?.user?.username
     },
     {
       key: '2',
