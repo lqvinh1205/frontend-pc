@@ -15,7 +15,7 @@ const ListProducts = () => {
   const onChangePage = (page) => {
     dispatch(
       getProduct({
-        query: `perpage=12&page=${page}`
+        query: `perpage=12&page=${page}&is_delete=false`
       })
     );
   };
@@ -54,7 +54,7 @@ const ListProducts = () => {
   useEffect(() => {
     dispatch(
       getProduct({
-        query: `perpage=12&page=1`
+        query: `perpage=12&page=1&is_delete=false`
       })
     );
   }, []);

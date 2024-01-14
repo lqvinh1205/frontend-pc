@@ -6,24 +6,20 @@ import { useNavigate } from 'react-router-dom';
 const HeaderAdmin = () => {
   const navigate = useNavigate();
 
+  const logout = () => {
+    localStorage.removeItem('user');
+    navigate('/');
+  };
   const items = [
     {
       label: <button onClick={() => navigate('/')}>Về trang chủ</button>,
       key: '0'
     },
     {
-      label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-          2nd menu item
-        </a>
-      ),
-      key: '1'
-    },
-    {
       type: 'divider'
     },
     {
-      label: 'Đăng xuất',
+      label: <button onClick={() => logout()}>Đăng xuất</button>,
       key: '3'
     }
   ];

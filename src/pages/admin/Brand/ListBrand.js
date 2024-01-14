@@ -1,5 +1,5 @@
 import { Avatar, Button, Modal, Row, Table, Typography } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { deleteBrand, getBrand } from './slice';
@@ -75,7 +75,7 @@ const ListBrand = (props) => {
         columns={columns}
         dataSource={brands}
         bordered
-        title={() => <Typography.Title level={3}>Danh sách sản phẩm</Typography.Title>}
+        title={() => <Typography.Title level={3}>Danh sách thương hiệu</Typography.Title>}
         pagination={{
           total: brands?.lenght
         }}

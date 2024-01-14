@@ -38,7 +38,7 @@ const ListReceipt = (props) => {
     {
       title: 'Người nhập kho',
       dataIndex: 'importer',
-      render: (user) => <span>{user.username}</span>
+      render: (user) => <span>{user?.username}</span>
     },
     {
       title: 'Action',

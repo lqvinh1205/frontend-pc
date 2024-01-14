@@ -3,7 +3,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import React, { useEffect, useState } from 'react';
 import { getImage } from '../../../ultils';
 import { DeleteOutlined, MinusSquareOutlined, PlusSquareOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { postCartProducts } from './slice';
 
@@ -101,8 +101,11 @@ const Cart = () => {
   const columns = [
     {
       title: 'Tên sản phẩm',
-      dataIndex: 'name',
-      render: (text) => <a href="/">{text}</a>
+      render: (_) => (
+        <Link to={`/products/${_._id}`}>
+          {_.name.length > 50 ? `${_.name.substring(0, 50)}...` : _.name}
+        </Link>
+      )
     },
     {
       title: 'Ảnh',

@@ -131,8 +131,7 @@ const EditProduct = (props) => {
     }));
     setThumbnail(payload.thumbnail?.path);
     delete payload.thumbnail;
-    console.log(payload.config);
-    if (payload?.config) {
+    if (payload?.config && Object.keys(payload?.config).length === 0) {
       setConfig(
         Object.keys(JSON.parse(payload.config)).map((item) => JSON.parse(payload.config)[item])
       );

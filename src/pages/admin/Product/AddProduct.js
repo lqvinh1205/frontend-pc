@@ -105,7 +105,7 @@ const AddProduct = (props) => {
     if ('price_root' in changedValues || 'discount' in changedValues) {
       if (Number(allValues.discount) > 0) {
         form.setFieldsValue({
-          price: (allValues.price_root / 100) * Number(allValues.discount)
+          price: allValues.price_root - (allValues.price_root / 100) * Number(allValues.discount)
         });
       } else {
         form.setFieldsValue({

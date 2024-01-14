@@ -24,7 +24,7 @@ const SideBar = () => {
           <div>ElecCar</div>
         </div>
       </Link>
-      <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+      <Menu theme="dark" mode="inline">
         <Menu.Item key="1" icon={<PieChartOutlined />}>
           <Link to="/admin">Thống kê</Link>
         </Menu.Item>

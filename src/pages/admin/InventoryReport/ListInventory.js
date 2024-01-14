@@ -11,6 +11,12 @@ const ListInventory = (props) => {
 
   const columns = [
     {
+      title: 'Mã nhập kho',
+      className: 'column-money',
+      dataIndex: 'receipt_id',
+      render: (receipt) => <span>{receipt.code}</span>
+    },
+    {
       title: 'Mã code',
       className: 'column-money',
       dataIndex: 'product_id',
@@ -51,6 +57,7 @@ const ListInventory = (props) => {
       columns.map((item) => item.title),
       ...products.map((item) => {
         return [
+          item.receipt_id.code,
           item.product_id.code,
           item.product_id.name,
           item.product_id.brand_id.name,
@@ -76,6 +83,7 @@ const ListInventory = (props) => {
 
       <Table
         columns={columns}
+        rowKey="_id"
         dataSource={products.length > 0 ? products : []}
         bordered
         title={() => <Typography.Title level={3}>Báo cáo tồn kho</Typography.Title>}

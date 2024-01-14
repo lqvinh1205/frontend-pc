@@ -83,10 +83,9 @@ const ListProducts = (props) => {
     },
     {
       title: 'Action',
-      align: 'right',
-      width: '7%',
+      align: 'center',
       render: (product) => (
-        <Row className="flex justify-end gap-2">
+        <div className="flex  justify-end gap-2">
           <Select
             defaultValue={product.is_deleted}
             onChange={(val) => handleChangeStatus(val, product)}
@@ -102,10 +101,10 @@ const ListProducts = (props) => {
             ]}
             className="flex-1"
           />
-          <Link to={`/admin/products/${product._id}/edit`}>
+          <Link to={`/admin/products/${product._id}/edit`} className="flex">
             <Button type="primary" className="bg-[#1677ff]" icon={<EditOutlined />}></Button>
           </Link>
-        </Row>
+        </div>
       )
     }
   ];

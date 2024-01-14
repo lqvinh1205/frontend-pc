@@ -219,9 +219,10 @@ const AddReceipt = () => {
       message.warning('Số  lượng sản phẩm không hợp lệ');
       return;
     }
+    const user = localStorage.getItem('user');
     const { payload } = await dispatch(
       createReceipt({
-        importer: '6568a322e1dd50d48c30693d',
+        importer: JSON.parse(user)?.user?._id,
         products: listProduct
       })
     );
