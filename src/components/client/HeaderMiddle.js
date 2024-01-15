@@ -37,7 +37,7 @@ const HeaderMiddle = () => {
   return (
     <div className="flex justify-center">
       <div className="flex h-[90px] w-full max-w-[1650px] flex-wrap items-center px-2">
-        <div className="order-1 flex flex-1 justify-between">
+        <div className="order-1 flex justify-between">
           <a href="/">
             <img
               className="h-auto max-w-full border-none object-cover"
@@ -64,8 +64,8 @@ const HeaderMiddle = () => {
             </button>
           </form>
         </div>
-        <div className="order-2 flex flex-wrap md:order-3">
-          <div className="text-[#ee0000]">
+        <div className="order-2 flex flex-1 flex-wrap justify-end md:order-3 md:flex-none">
+          <div className="hidden text-[#ee0000] sm:block">
             <span className="text-[12px] sm:text-[14px]">Gọi mua hàng: </span>
             <span className="text-[20px] sm:text-[26px]">1900 2164</span>
           </div>

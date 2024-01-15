@@ -14,11 +14,11 @@ const Homepage = (prop) => {
             <CategoryBrand />
           </div>
           <div id="group-images" className="col-span-full max-w-full md:col-span-5">
-            <div className="grid grid-cols-4">
+            <div className="grid grid-cols-4 gap-2">
               <div id="banner" className="col-span-full max-w-full lg:col-span-3">
                 <CarouselBanner />
               </div>
-              <div id="sub-images" className="hidden flex-col bg-red-100 lg:flex">
+              <div id="sub-images" className="hidden flex-col lg:flex">
                 <div className="flex h-[calc(700px/3)] items-center overflow-hidden">
                   <img
                     className="h-full w-full object-cover"
@@ -26,7 +26,7 @@ const Homepage = (prop) => {
                     alt=""
                   />
                 </div>
-                <div className="flex h-[calc(700px/3)] items-center overflow-hidden">
+                <div className="flex h-[calc(700px/3)] items-center overflow-hidden py-2">
                   <img
                     className="h-full w-full object-cover"
                     src="https://phucanh.vn/upload/img/laptop/350x195.jpg"

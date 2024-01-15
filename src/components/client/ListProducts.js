@@ -80,7 +80,7 @@ const ListProducts = () => {
               <div
                 onClick={() => navigate(`/products/${item._id}`)}
                 className="flex flex-1 cursor-pointer flex-col justify-end p-2">
-                <p className="pb-1 leading-[18px]">{item.name}</p>
+                <p className="line-clamp-2 overflow-hidden pb-1 leading-[18px]">{item.name}</p>
                 <div className="leading-4">
                   <i className="text-[12px]">Giá niêm yết:</i> <span> {item.price_root} đ</span>
                 </div>
