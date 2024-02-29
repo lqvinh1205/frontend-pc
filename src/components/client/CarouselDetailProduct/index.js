@@ -26,8 +26,8 @@ export default function CarouselDetailProduct({ imageUrls }) {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper2">
         {imageUrls &&
-          imageUrls.map((item) => (
-            <SwiperSlide>
+          imageUrls.map((item, idx) => (
+            <SwiperSlide key={idx}>
               <img alt="" src={item} />
             </SwiperSlide>
           ))}
@@ -42,8 +42,8 @@ export default function CarouselDetailProduct({ imageUrls }) {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper">
         {imageUrls &&
-          imageUrls.map((item) => (
-            <SwiperSlide>
+          imageUrls.map((item, idx) => (
+            <SwiperSlide key={idx}>
               <img alt="" src={item} />
             </SwiperSlide>
           ))}

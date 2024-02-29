@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Carousel, Modal, Typography, message } from 'antd';
+import { Carousel, Divider, Modal, Typography, message } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from './slice';
@@ -13,6 +13,7 @@ const DetailProduct = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
 
   const product = useSelector((state) => state.detailProduct.product);
@@ -59,6 +60,9 @@ const DetailProduct = () => {
     addToCart(product);
     navigate('/carts');
   };
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
   useEffect(() => {
     if (product.images) {
       let urls = product?.images?.map((item) => {
@@ -88,7 +92,7 @@ const DetailProduct = () => {
           <div className="flex items-center">
             <div className="w-[40%] text-[13px] sm:text-[14px]">Giá niêm yết:</div>
             <div className="text-[18px] font-medium leading-[42px] sm:text-[20px]">
-              {product.price_root.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+              {product?.price_root?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
             </div>
           </div>
           <div className="flex items-center">
@@ -96,7 +100,7 @@ const DetailProduct = () => {
               Giá ưu đãi tháng 12:
             </div>
             <div className="text-[25px] font-semibold leading-[38px] text-[#ee0000]">
-              {product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+              {product?.price?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
               <span className="text-[10px] font-normal text-[#888] sm:text-[12px]">
                 [Giá đã có VAT]
               </span>
@@ -131,10 +135,7 @@ const DetailProduct = () => {
               disable && 'cursor-not-allowed bg-gradient-to-b from-[#747272] to-[#353434]'
             }`}
             onClick={() => !disable && addToCart(product)}>
-            <div
-              className="text-[14px] font-semibold sm:text-[15px]">
-              CHO VÀO GIỎ
-            </div>
+            <div className="text-[14px] font-semibold sm:text-[15px]">CHO VÀO GIỎ</div>
             <div className="text-[13px] sm:text-[14px]">Mua tiếp sản phẩm khác</div>
           </div>
           <div
@@ -191,7 +192,7 @@ const DetailProduct = () => {
                   <div className="bg-[#d1d5db] p-3 text-[#ff0000]">{item.name}</div>
                   <div className="divide-y divide-slate-200">
                     {item.list?.map((config) => (
-                      <div className="grid grid-cols-3 px-3 py-2">
+                      <div className="grid grid-cols-3 px-3 py-2" key={config._id}>
                         <div>{config.name}</div>
                         <div className="col-span-2">{config.value}</div>
                       </div>
@@ -202,6 +203,20 @@ const DetailProduct = () => {
             })}
           </Modal>
         )}
+      </div>
+      <div className="w-full pt-3">
+        <Divider />
+        <div className="text-[20px] font-medium">Mô tả sản phẩm</div>
+        <Divider />
+        <div
+          className={`description-content transition-max-height overflow-hidden duration-500 ${
+            isExpanded ? 'h-auto' : 'h-[300px]'
+          }`}>
+          <div dangerouslySetInnerHTML={{ __html: product.description }}></div>
+        </div>
+        <button className="mt-2 text-blue-500" onClick={toggleExpand}>
+          {!isExpanded ? 'Xem thêm...' : 'Ẩn bớt'}
+        </button>
       </div>
     </div>
   );
