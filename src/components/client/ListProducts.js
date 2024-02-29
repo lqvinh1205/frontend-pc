@@ -82,11 +82,19 @@ const ListProducts = () => {
                 className="flex flex-1 cursor-pointer flex-col justify-end p-2">
                 <p className="line-clamp-2 overflow-hidden pb-1 leading-[18px]">{item.name}</p>
                 <div className="leading-4">
-                  <i className="text-[12px]">Giá niêm yết:</i> <span> {item.price_root} đ</span>
+                  <i className="text-[12px]">Giá niêm yết:</i>{' '}
+                  <span>
+                    {item.price_root.toLocaleString('vi-VN', {
+                      style: 'currency',
+                      currency: 'VND'
+                    })}
+                  </span>
                 </div>
                 <div className="text-[#d42333]">
                   <i className="text-[12px]">Giá bán:</i>
-                  <span className="text-[18px]"> {item.price} đ</span>
+                  <span className="text-[18px]">
+                    {item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                  </span>
                 </div>
               </div>
               <div className="flex justify-between px-2 pb-2">

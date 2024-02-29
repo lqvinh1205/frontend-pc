@@ -90,7 +90,15 @@ const ListBills = (props) => {
     },
     {
       title: 'Tổng tiền',
-      dataIndex: 'total'
+      dataIndex: 'total',
+      render: (item) => (
+        <span>
+          {item.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+          })}
+        </span>
+      )
     },
     {
       title: 'Action',
@@ -134,7 +142,6 @@ const ListBills = (props) => {
         'Trạng thái'
       ],
       ...billDetail.flat().map((item) => {
-        console.log(item);
         return [
           item.bill.code,
           dayjs(item.bill.sale_date).format('DD/MM/YYYY'),
@@ -165,7 +172,7 @@ const ListBills = (props) => {
         dataSource={bills.length > 0 ? bills : []}
         rowKey="_id"
         bordered
-        title={() => <Typography.Title level={3}>Danh sách hóa đơn</Typography.Title>}
+        title={() => <Typography.Title level={3}>Danh sách đơn hàng</Typography.Title>}
         pagination={{
           total: total
         }}

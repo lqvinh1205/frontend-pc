@@ -1,7 +1,7 @@
-import { Avatar, Descriptions, Modal, Table, Button } from 'antd';
+import { Avatar, Modal, Table, Button, Divider } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getImage } from '../../../ultils';
+import { getImage, numberToVietnameseWords } from '../../../ultils';
 import { getBillById } from '../../../pages/admin/Bill/slice';
 import dayjs from 'dayjs';
 import { useReactToPrint } from 'react-to-print';
@@ -32,74 +32,39 @@ const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
     {
       title: 'Giá',
       render: (_) => {
-        return <span className="text-red-600">{`${_.price}`} VND</span>;
-      }
+        return (
+          <span className="text-red-600">
+            {`${_.price.toLocaleString('vi-VN', {
+              style: 'currency',
+              currency: 'VND'
+            })}`}
+          </span>
+        );
+      },
+      className: 'truncate'
     },
     {
       title: 'Số lượng',
-      dataIndex: 'quantity'
+      dataIndex: 'quantity',
+      className: 'truncate',
+      align: 'center'
     },
     {
       title: 'Thành tiền',
       render: (_) => {
         return (
           <div className="flex justify-between">
-            <span className="text-red-600">{`${_.price * _.quantity}`} VND</span>
+            <span className="text-red-600">{`${(_.price * _.quantity).toLocaleString('vi-VN', {
+              style: 'currency',
+              currency: 'VND'
+            })}`}</span>
           </div>
         );
-      }
+      },
+      className: 'truncate'
     }
   ];
-  const items = [
-    {
-      key: '1',
-      label: 'Họ và tên',
-      children: billDetail?.username
-    },
-    {
-      key: '2',
-      label: 'Số điện thoại',
-      children: billDetail?.phone_number
-    },
-    {
-      key: '3',
-      label: 'Mã hóa đơn',
-      children: billDetail?.code
-    },
-    {
-      key: '4',
-      label: 'Email',
-      children: billDetail?.email
-    },
-    {
-      key: '5',
-      label: 'Ghi chú',
-      span: 2,
-      children: billDetail?.note
-    },
-    {
-      key: '6',
-      label: 'Địa chỉ',
-      span: 2,
-      children: billDetail?.address
-    },
-    {
-      key: '7',
-      label: 'Ngày bán',
-      children: dayjs(billDetail?.sale_date).format('DD/MM/YYYY')
-    },
-    {
-      key: '8',
-      label: 'Trạng thái',
-      span: 2,
-      children: billDetail?.status
-    },
-    {
-      key: '7',
-      label: 'Tổng tiền',
-      children: <span className="font-semibold text-red-600">{billDetail?.total}</span>
-    }
-  ];
+
   const getDetailBill = async () => {
     const { payload } = await dispatch(getBillById(id));
     setBillDetail(payload);
@@ -112,6 +77,7 @@ const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
 
   const generatePDF = useReactToPrint({
     content: () => document.querySelector('.ant-modal-content'),
+    documentTitle: 'Hóa đơn giá trị gia tăng',
     bodyClass: 'pt-3',
     pageStyle: `
     @media print {
@@ -126,31 +92,79 @@ const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
   });
 
   return (
-    <>
+    <div>
       {billDetail && (
         <Modal
-          title="Hóa đơn chi tiết"
           width="80vw"
           open={isModalOpen}
           footer={
-            <Button type="dashed" onClick={generatePDF}>
+            <Button type="primary" className="bg-[#1677ff]" onClick={generatePDF}>
               Export PDF
             </Button>
           }
           closeIcon={null}
-          onCancel={handleCancel}
-          style={{ width: '100%' }}>
-          <Descriptions className="py-4" layout="vertical" items={items} />
-          <Table
-            rowKey={'_id'}
-            columns={columns}
-            dataSource={billDetail.list}
-            bordered
-            pagination={false}
-          />
+          onCancel={handleCancel}>
+          <div className="p-5">
+            <h3 className="text-center text-[28px]">Hóa đơn giá trị gia tăng</h3>
+            <div className="flex flex-col items-end pt-3">
+              <div className="w-[30%]">
+                Mã hóa đơn: <strong>{billDetail?.code}</strong>
+              </div>
+              <div className="w-[30%]">
+                Ngày bán: {dayjs(billDetail?.sale_date).format('DD/MM/YYYY')}
+              </div>
+            </div>
+            <div className="flex flex-col pt-2 leading-8">
+              <span>Tên người bán: {billDetail?.sale_staff}</span>
+              <span>Địa chỉ: 119 Trung Kính, Trung Hòa, Hà Nội</span>
+              <span>Số điện thoại: 1900284763</span>
+            </div>
+            <Divider className="my-2" />
+            <div className="flex flex-col pt-2 leading-8">
+              <span>Tên người người mua: {billDetail?.username}</span>
+              <span>Địa chỉ: {billDetail?.address}</span>
+              <span>Email: {billDetail?.email}</span>
+              <span>Số điện thoại: {billDetail?.phone_number}</span>
+              <span>Hình thức thanh toán: Tiền mặt</span>
+            </div>
+            <Divider className="my-2" />
+            <Table
+              columns={columns}
+              rowKey="_id"
+              dataSource={billDetail.list}
+              bordered
+              pagination={false}
+            />
+            <Divider className="my-2" />
+            <div className="flex flex-col pt-2 leading-9">
+              <span>
+                Tổng tiền (đã bao gồm VAT):
+                <strong className="pl-1">
+                  {billDetail?.total?.toLocaleString('vi-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                  })}
+                </strong>
+              </span>
+              <span>
+                Số tiền viết bằng chữ: <strong>{numberToVietnameseWords(billDetail?.total)}</strong>
+              </span>
+            </div>
+            <Divider className="my-2" />
+            <div className="flex pb-[100px]">
+              <div className="flex w-[50%] flex-col items-center">
+                <div>Người mua hàng</div>
+                <i className="text-[12px]">Chữ ký số (nếu có)</i>
+              </div>
+              <div className="flex w-[50%] flex-col items-center">
+                <div>Người bán hàng</div>
+                <i className="text-[12px]">Chữ ký điện tử, chữ ký số</i>
+              </div>
+            </div>
+          </div>
         </Modal>
       )}
-    </>
+    </div>
   );
 };
 export default ModalReceiptDetail;

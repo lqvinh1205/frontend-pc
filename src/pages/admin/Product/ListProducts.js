@@ -59,7 +59,6 @@ const ListProducts = (props) => {
     {
       title: 'Thời gian bảo hành',
       render: (_) => {
-        console.log(_);
         return <span>{`${_.warranty_time} ${_.warranty_unit}`}</span>;
       }
     },

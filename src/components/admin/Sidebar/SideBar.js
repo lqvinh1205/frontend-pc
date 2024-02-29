@@ -38,7 +38,7 @@ const SideBar = () => {
           <Link to="/admin/products">Sản phẩm</Link>
         </Menu.Item>
         <Menu.Item key="6" icon={<ShoppingOutlined />}>
-          <Link to="/admin/bills">Hóa đơn</Link>
+          <Link to="/admin/bills">Đơn hàng</Link>
         </Menu.Item>
         <Menu.Item key="11" icon={<FileOutlined />}>
           <Link to="/admin/receipt">Nhập kho</Link>

@@ -88,7 +88,7 @@ const DetailProduct = () => {
           <div className="flex items-center">
             <div className="w-[40%] text-[13px] sm:text-[14px]">Giá niêm yết:</div>
             <div className="text-[18px] font-medium leading-[42px] sm:text-[20px]">
-              {product.price_root} VND
+              {product.price_root.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
             </div>
           </div>
           <div className="flex items-center">
@@ -96,7 +96,7 @@ const DetailProduct = () => {
               Giá ưu đãi tháng 12:
             </div>
             <div className="text-[25px] font-semibold leading-[38px] text-[#ee0000]">
-              {product.price} VND
+              {product.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
               <span className="text-[10px] font-normal text-[#888] sm:text-[12px]">
                 [Giá đã có VAT]
               </span>

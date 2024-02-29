@@ -55,3 +55,52 @@ const s2ab = (s) => {
   }
   return buf;
 };
+
+export const numberToVietnameseWords = (number) => {
+  const units = ['', 'nghìn', 'triệu', 'tỷ', 'nghìn tỷ', 'triệu tỷ'];
+  const digits = ['không', 'một', 'hai', 'ba', 'bốn', 'năm', 'sáu', 'bảy', 'tám', 'chín'];
+
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  function readThreeDigits(number) {
+    let result = '';
+    const hundred = Math.floor(number / 100);
+    const ten = Math.floor((number % 100) / 10);
+    const unit = number % 10;
+
+    if (hundred > 0) {
+      result += digits[hundred] + ' trăm ';
+    }
+
+    if (ten > 1) {
+      result += digits[ten] + ' mươi ';
+    } else if (ten === 1) {
+      result += 'mười ';
+    }
+
+    if (ten !== 1 && unit > 0) {
+      if (ten === 0 && hundred !== 0) {
+        result += 'lẻ ';
+      }
+      result += digits[unit];
+    }
+
+    return result;
+  }
+
+  let result = '';
+  let chunkIndex = 0;
+
+  do {
+    const chunk = number % 1000;
+    if (chunk !== 0) {
+      result = readThreeDigits(chunk) + ' ' + units[chunkIndex] + ' ' + result;
+    }
+    number = Math.floor(number / 1000);
+    chunkIndex++;
+  } while (number > 0);
+
+  return capitalizeFirstLetter(result.trim());
+};

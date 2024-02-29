@@ -105,6 +105,7 @@ const AddReceipt = () => {
   const products = useSelector((data) => data.product.list);
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [request, setRequest] = useState({ address: '', warehouse: '', deliver: '' });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -212,6 +213,18 @@ const AddReceipt = () => {
       message.warning('Không có sản phẩm nào được chọn');
       return;
     }
+    if (!request.address) {
+      message.warning('Địa điểm nhập hàng bắt buộc nhập');
+      return;
+    }
+    if (!request.warehouse) {
+      message.warning('Tên kho hàng hàng bắt buộc nhập');
+      return;
+    }
+    if (!request.deliver) {
+      message.warning('Tên người giao hàng bắt buộc nhập');
+      return;
+    }
     const isValidQuantity = listProduct.findIndex((item) => {
       return Number(item.quantity) === 0 || isNaN(Number(item.quantity));
     });
@@ -223,14 +236,20 @@ const AddReceipt = () => {
     const { payload } = await dispatch(
       createReceipt({
         importer: JSON.parse(user)?.user?._id,
-        products: listProduct
+        products: listProduct,
+        ...request
       })
     );
     if (payload?.message === 'success') {
       navigate('/admin/receipt');
     }
   };
-
+  const syncRequest = (e, key) => {
+    setRequest((prevState) => ({
+      ...prevState,
+      [key]: e.target.value
+    }));
+  };
   const handleSearch = (value) => {
     let res = [];
     if (value) {
@@ -279,6 +298,21 @@ const AddReceipt = () => {
     },
     {
       key: '3',
+      label: 'Địa điểm',
+      children: <Input placeholder="Địa điểm" onChange={(e) => syncRequest(e, 'address')} />
+    },
+    {
+      key: '4',
+      label: 'Nhập tại kho',
+      children: <Input placeholder="Tên kho" onChange={(e) => syncRequest(e, 'warehouse')} />
+    },
+    {
+      key: '6',
+      label: 'Tên người giao',
+      children: <Input placeholder="Địa điểm" onChange={(e) => syncRequest(e, 'deliver')} />
+    },
+    {
+      key: '5',
       label: 'Tìm kiếm sản phẩm',
       span: 3,
       children: (
