@@ -5,7 +5,6 @@ export const getImage = (nameImage) => {
 };
 
 export const createFormData = (data) => {
-  console.log(data);
   const formData = new FormData();
   Object.keys(data).forEach((key) => {
     if (key === 'images' || key === 'thumbnail' || key === 'files') {

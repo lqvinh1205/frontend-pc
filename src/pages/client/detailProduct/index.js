@@ -132,8 +132,7 @@ const DetailProduct = () => {
             }`}
             onClick={() => !disable && addToCart(product)}>
             <div
-              className="text-[14px] font-semibold sm:text-[15px]"
-              onClick={() => addToCart(product)}>
+              className="text-[14px] font-semibold sm:text-[15px]">
               CHO VÀO GIỎ
             </div>
             <div className="text-[13px] sm:text-[14px]">Mua tiếp sản phẩm khác</div>

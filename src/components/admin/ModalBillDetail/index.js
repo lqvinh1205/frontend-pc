@@ -1,9 +1,10 @@
-import { Avatar, Descriptions, Modal, Table } from 'antd';
+import { Avatar, Descriptions, Modal, Table, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getImage } from '../../../ultils';
 import { getBillById } from '../../../pages/admin/Bill/slice';
 import dayjs from 'dayjs';
+import { useReactToPrint } from 'react-to-print';
 
 const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
   const dispatch = useDispatch();
@@ -108,6 +109,22 @@ const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
       getDetailBill();
     }
   }, [id]);
+
+  const generatePDF = useReactToPrint({
+    content: () => document.querySelector('.ant-modal-content'),
+    bodyClass: 'pt-3',
+    pageStyle: `
+    @media print {
+      .pagebreak {
+        page-break-before: always;
+      }
+      .ant-modal-footer {
+        display: none !important;
+      }
+    }
+  `
+  });
+
   return (
     <>
       {billDetail && (
@@ -115,11 +132,22 @@ const ModalReceiptDetail = ({ id, isModalOpen, handleCancel }) => {
           title="Hóa đơn chi tiết"
           width="80vw"
           open={isModalOpen}
-          footer={null}
+          footer={
+            <Button type="dashed" onClick={generatePDF}>
+              Export PDF
+            </Button>
+          }
           closeIcon={null}
-          onCancel={handleCancel}>
+          onCancel={handleCancel}
+          style={{ width: '100%' }}>
           <Descriptions className="py-4" layout="vertical" items={items} />
-          <Table columns={columns} dataSource={billDetail.list} bordered pagination={false} />
+          <Table
+            rowKey={'_id'}
+            columns={columns}
+            dataSource={billDetail.list}
+            bordered
+            pagination={false}
+          />
         </Modal>
       )}
     </>
