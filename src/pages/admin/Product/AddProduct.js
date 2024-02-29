@@ -10,6 +10,7 @@ import { getBrand } from '../Brand/slice';
 import { createProduct } from './slice';
 import { createFormData } from '../../../ultils';
 import { getConfiguage } from '../Configuage/slice';
+import TextEditor from './Components/TextEditor';
 
 const { Title } = Typography;
 
@@ -239,7 +240,7 @@ const AddProduct = (props) => {
           </Col>
         </Row>
         <Form.Item label="Mô tả" name="description">
-          <TextArea placeholder="description" />
+          <TextEditor onChange={(val) => {form.setFieldsValue({ description: val })}}/>
         </Form.Item>
         <Form.Item
           name="thumbnail"

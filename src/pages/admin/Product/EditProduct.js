@@ -7,9 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createFormData, getImage } from '../../../ultils';
 import { editProduct, getProductById } from './slice';
-import TextArea from 'antd/es/input/TextArea';
 import { getBrand } from '../Brand/slice';
 import { getConfiguage } from '../Configuage/slice';
+import TextEditor from './Components/TextEditor';
 
 const { Title } = Typography;
 
@@ -26,6 +26,7 @@ const EditProduct = (props) => {
   const [thumbnail, setThumbnail] = useState(null);
   const [idsDelete, setIdsDelete] = useState([]);
   const [config, setConfig] = useState([]);
+  const [description, setDescription] = useState('');
 
   const { id } = useParams();
   const brands = useSelector((state) => state.brand?.list);
@@ -129,6 +130,7 @@ const EditProduct = (props) => {
       status: 'done',
       url: getImage(item.path)
     }));
+    setDescription(payload.description);
     setThumbnail(payload.thumbnail?.path);
     delete payload.thumbnail;
     if (payload?.config && Object.keys(payload?.config).length !== 0) {
@@ -265,7 +267,12 @@ const EditProduct = (props) => {
           </Col>
         </Row>
         <Form.Item label="Mô tả" name="description">
-          <TextArea placeholder="description" />
+          <TextEditor
+            data={description}
+            onChange={(val) => {
+              form.setFieldsValue({ description: val });
+            }}
+          />
         </Form.Item>
         {thumbnail && (
           <img
